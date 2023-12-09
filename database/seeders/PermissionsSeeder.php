@@ -27,5 +27,15 @@ class PermissionsSeeder extends Seeder
             ]);
         }
 
+
+        $studentPermission = ['student','student.setting','student.setting.academic year','student.setting.class','student.setting.shift','student.setting.section','student.setting.group','student.setting.student category',];
+
+        foreach ($studentPermission as $key => $permission) {
+            Permission::updateOrCreate([
+                'name' => $permission,
+                'group_name' => 'Student'
+            ]);
+        }
+
     }
 }

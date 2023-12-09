@@ -37,6 +37,8 @@
     {{-- My Custom css --}}
     <link href="{{asset('backend/build/css/myCustom.css')}}" rel="stylesheet">
 
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
     @stack('css')
   </head>
 
@@ -46,7 +48,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border:1px  solid #D9DEE4;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Laravel IMS</span></a>
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>ITDEAL ERP</span></a>
             </div>
 
             <div class="clearfix"></div>
