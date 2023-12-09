@@ -12,6 +12,6 @@ Route::group(['as'=>'student.','prefix'=>'student'],function(){
         Route::group(['as'=>'session.','prefix'=>'academic-year'],function(){
             Route::get('/',[SessionController::class,'index'])->name('index');
         });
-        
+
     });
 });

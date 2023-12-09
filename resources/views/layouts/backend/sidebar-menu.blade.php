@@ -41,7 +41,7 @@
           <ul class="nav child_menu" style="{{Request::is('user_management/*') ? 'display: block' : ''}}">
 
             @can('user_management.permissions')
-            <li class="{{Request::is('user_management/permission/*') ? 'current-page' : ''}}"><a href="{{route('userManagement.permission.index')}}">Student Entry</a></li>
+            <li class="{{Request::is('user_management/permission/*') ? 'current-page' : ''}}"><a href="{{route('lottery.student-entry')}}">Student Entry</a></li>
             @endcan
 
             @can('user_management.roles')

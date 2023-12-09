@@ -10,4 +10,10 @@ class Session extends Model
     use HasFactory;
 
     protected $fillable = ['session_year','status','created_at','updated_at'];
+
+
+    public function lot_students()
+    {
+        return $this->hasMany(LotteryStudent::class);
+    }
 }
