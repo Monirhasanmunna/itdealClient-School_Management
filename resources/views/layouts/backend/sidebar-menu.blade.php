@@ -45,7 +45,7 @@
             @endcan
 
             @can('user_management.roles')
-            <li class="{{Request::is('user_management/role/*') ? 'current-page' : ''}}"><a href="{{route('userManagement.role.index')}}">Draw Lottery</a></li>
+            <li class="{{Request::is('user_management/role/*') ? 'current-page' : ''}}"><a href="{{route('lottery.draw-lottery')}}">Draw Lottery</a></li>
             @endcan
 
             @can('user_management.users')

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\Student\Lottery\DrawLotteryController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\Student\Lottery\LotteryStudentController;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::group(['as'=>'lottery.','prefix'=>'lottery'],function(){
         Route::get('/student-entry',[LotteryStudentController::class,'index'])->name('student-entry');
         Route::post('/store',[LotteryStudentController::class,'store'])->name('store');
+
+        Route::get('/draw-lottery',[DrawLotteryController::class,'index'])->name('draw-lottery');
+        Route::post('/draw-lottery/store',[DrawLotteryController::class,'store'])->name('draw-lottery.store');
+        Route::get('/selected-applicant',[DrawLotteryController::class,'getSelectedApplicant'])->name('selected-applicant');
     });
 
 require __DIR__.'/userManagement.php';

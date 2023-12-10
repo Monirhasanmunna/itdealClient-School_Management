@@ -2,12 +2,21 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class LotteryStudent extends Model
 {
     use HasFactory;
+
+
+    // protected static function boot()
+    // {
+    //     static::creating(function($model){
+            
+    //     });
+    // }
 
     protected $fillable = [
         'session_id',
