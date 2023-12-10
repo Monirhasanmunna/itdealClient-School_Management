@@ -15,7 +15,7 @@ class LotteryStudentController extends Controller
 
     public function index()
     {
-        $applicants = LotteryStudent::orderBy('id','DESC')->get();
+        $applicants = LotteryStudent::where('isSelected',false)->orderBy('id','DESC')->get();
         return view('backend.student.lottery.student_entry',compact('applicants'));
     }
 
