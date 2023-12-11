@@ -41,15 +41,15 @@
           <ul class="nav child_menu" style="{{Request::is('user_management/*') ? 'display: block' : ''}}">
 
             @can('user_management.permissions')
-            <li class="{{Request::is('user_management/permission/*') ? 'current-page' : ''}}"><a href="{{route('userManagement.permission.index')}}">Student Entry</a></li>
+            <li class="{{Request::is('user_management/permission/*') ? 'current-page' : ''}}"><a href="{{route('lottery.student-entry')}}">Student Entry</a></li>
             @endcan
 
             @can('user_management.roles')
-            <li class="{{Request::is('user_management/role/*') ? 'current-page' : ''}}"><a href="{{route('userManagement.role.index')}}">Draw Lottery</a></li>
+            <li class="{{Request::is('user_management/role/*') ? 'current-page' : ''}}"><a href="{{route('lottery.draw-lottery')}}">Draw Lottery</a></li>
             @endcan
 
             @can('user_management.users')
-            <li class="{{Request::is('user_management/user/*') ? 'current-page' : ''}}"><a href="{{route('userManagement.user.index')}}">Lottery Result</a></li>
+            <li class="{{Request::is('user_management/user/*') ? 'current-page' : ''}}"><a href="{{route('lottery.result')}}">Lottery Result</a></li>
             @endcan
           </ul>
         </li>
