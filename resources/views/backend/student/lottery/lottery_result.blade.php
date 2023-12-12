@@ -121,7 +121,7 @@
         <div class="modal-body">
           <div class="card">
             <div class="card-header">
-                <h2>Student Info</h2>
+                <h2>Student Info :</h2>
             </div>
             <div class="card-body">
                 <div id="studentInfo">
@@ -235,33 +235,33 @@
                     let item = `
                             <table class="table table-striped table-bordered">
                                 <tr>
-                                    <th>Student Name</th>
-                                    <td>${response.name}</td>
+                                    <th style='font-size:16px;'>Student Name</th>
+                                    <td style='font-size:17px;'>${response.name}</td>
                                 </tr>
 
                                 <tr>
-                                    <th>Aplicant No.</th>
-                                    <td>${response.applicant_id}</td>
+                                    <th style='font-size:16px;'>Aplicant No.</th>
+                                    <td style='font-size:17px;'>${response.applicant_id}</td>
                                 </tr>
 
                                 <tr>
-                                    <th>Father's Name</th>
-                                    <td>${response.father_name}</td>
+                                    <th style='font-size:16px;'>Father's Name</th>
+                                    <td style='font-size:17px;'>${response.father_name}</td>
                                 </tr>
 
                                 <tr>
-                                    <th>Mother's Name</th>
-                                    <td>${response.mother_name}</td>
+                                    <th style='font-size:16px;'>Mother's Name</th>
+                                    <td style='font-size:17px;'>${response.mother_name}</td>
                                 </tr>
 
                                 <tr>
-                                    <th>Gender</th>
-                                    <td>${response.gender}</td>
+                                    <th style='font-size:16px;'>Gender</th>
+                                    <td style='font-size:17px;'>${response.gender}</td>
                                 </tr>
 
                                 <tr>
-                                    <th>Religion</th>
-                                    <td>${response.religion}</td>
+                                    <th style='font-size:16px;'>Religion</th>
+                                    <td style='font-size:17px;'>${response.religion}</td>
                                 </tr>
                             </table>
                     `;
