@@ -1,7 +1,13 @@
 @extends('app')
 
 @push('css')
-
+<style>
+    @media (min-width: 1200px){
+        .modal-xl {
+            max-width: 1817px;
+        }
+    }
+</style>
 @endpush
 
 @section('content')
@@ -113,7 +119,7 @@
       <div class="modal-content">
 
         <div class="modal-header">
-          <h4 class="modal-title" id="myModalLabel">Selected Student</h4>
+          <h4 style="font-size: 27px" class="modal-title" id="myModalLabel">Selected Student</h4>
           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
         </div>
@@ -121,7 +127,7 @@
         <div class="modal-body">
           <div class="card">
             <div class="card-header">
-                <h2>Student Info :</h2>
+                <h2 style="font-size: 25px">Student Info :</h2>
             </div>
             <div class="card-body">
                 <div id="studentInfo">
@@ -278,33 +284,33 @@
                     let item = `
                             <table class="table table-striped table-bordered">
                                 <tr>
-                                    <th style='font-size:16px;'>Student Name</th>
-                                    <td style='font-size:17px;'>${response.name}</td>
+                                    <th style='font-size:21px;'>Student Name</th>
+                                    <td style='font-size:19px;'>${response.name}</td>
                                 </tr>
 
                                 <tr>
-                                    <th style='font-size:16px;'>Aplicant No.</th>
-                                    <td style='font-size:17px;'>${response.applicant_id}</td>
+                                    <th style='font-size:21px;'>Aplicant No.</th>
+                                    <td style='font-size:19px;'>${response.applicant_id}</td>
                                 </tr>
 
                                 <tr>
-                                    <th style='font-size:16px;'>Father's Name</th>
-                                    <td style='font-size:17px;'>${response.father_name}</td>
+                                    <th style='font-size:21px;'>Father's Name</th>
+                                    <td style='font-size:19px;'>${response.father_name}</td>
                                 </tr>
 
                                 <tr>
-                                    <th style='font-size:16px;'>Mother's Name</th>
-                                    <td style='font-size:17px;'>${response.mother_name}</td>
+                                    <th style='font-size:21px;'>Mother's Name</th>
+                                    <td style='font-size:19px;'>${response.mother_name}</td>
                                 </tr>
 
                                 <tr>
-                                    <th style='font-size:16px;'>Gender</th>
-                                    <td style='font-size:17px;'>${response.gender}</td>
+                                    <th style='font-size:21px;'>Gender</th>
+                                    <td style='font-size:19px;'>${response.gender}</td>
                                 </tr>
 
                                 <tr>
-                                    <th style='font-size:16px;'>Religion</th>
-                                    <td style='font-size:17px;'>${response.religion}</td>
+                                    <th style='font-size:21px;'>Religion</th>
+                                    <td style='font-size:19px;'>${response.religion}</td>
                                 </tr>
                             </table>
                     `;

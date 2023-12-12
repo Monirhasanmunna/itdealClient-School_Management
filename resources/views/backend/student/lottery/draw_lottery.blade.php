@@ -1,5 +1,9 @@
 @extends('app')
 
+@push('css')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+@endpush
+
 @section('content')
 <div class="row">
     <div class="col-md-12 col-sm-12">
@@ -24,7 +28,7 @@
                                 </div>
                             </div>
                             <div class="col-12 col-xl-2">
-                                <button type="submit" class="btn btn-primary" style="margin-top: 27px">Search</button>
+                                <button type="submit" class="btn btn-primary" style="margin-top: 27px">Draw</button>
                             </div>
                         </div>
                     </form>
@@ -76,6 +80,7 @@
 @endsection
 
 @push('js')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script>
         $(document).ready(function(){
             $("#seatForm").submit(function(e){
@@ -92,6 +97,7 @@
                     success     : (response)=>{
                         if(response){
                             getSelectedApplicant();
+                            toastr.success('Draw Success fully');
                         }
                     },
 
@@ -118,9 +124,9 @@
                     dataType : "JSON",
                     success : (response)=>{
                         console.log(response);
-                        if(response.length > 0){
+                        if(response.applications.length > 0){
 
-                            $.each(response,function(i,v){
+                            $.each(response.applications,function(i,v){
                                 rows += `
                                     <tr>
                                         <td>${v.applicant_id}</td>
