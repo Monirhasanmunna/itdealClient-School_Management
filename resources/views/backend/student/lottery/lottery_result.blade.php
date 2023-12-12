@@ -42,6 +42,7 @@
                               <th class="column-title">Fathar's Name</th>
                               <th class="column-title">Mother's Name</th>
                               <th class="column-title">Mobile No.</th>
+                              <th class="column-title text-center">Action</th>
                             </tr>
                           </thead>
           
@@ -104,6 +105,40 @@
         </div>
       </div>
 </div>
+
+
+{{-- show modal --}}
+<div class="modal fade bs-example-modal-lg" id="showModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h4 class="modal-title" id="myModalLabel">Selected Student</h4>
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-header">
+                <h2>Student Info</h2>
+            </div>
+            <div class="card-body">
+                <div id="studentInfo">
+                    
+                </div>
+            </div>
+          </div>
+        </div>
+
+        {{-- <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div> --}}
+
+      </div>
+    </div>
+  </div>
+{{-- show modal --}}
 @endsection
 
 @push('js')
@@ -140,6 +175,7 @@
                                         <td>${v.father_name}</td>
                                         <td>${v.mother_name}</td>
                                         <td>${v.phone_number}</td>
+                                        <td class='text-center'><a onclick="showItem(${v.id})" class='btn btn-sm btn-primary' href='javascript:void(0)'><i class="fa-solid fa-display"></i></a></td>
                                     </tr>
                                 `
                             });
@@ -188,5 +224,53 @@
                 });
             }
         });
+
+        function showItem(id){
+            $.ajax({
+                url :  `/lottery/selected-student/${id}/show`,
+                type : "GET",
+                dataType : 'JSON',
+                success : (response)=>{
+                    console.log(response);
+                    let item = `
+                            <table class="table table-striped table-bordered">
+                                <tr>
+                                    <th>Student Name</th>
+                                    <td>${response.name}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Aplicant No.</th>
+                                    <td>${response.applicant_id}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Father's Name</th>
+                                    <td>${response.father_name}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Mother's Name</th>
+                                    <td>${response.mother_name}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Gender</th>
+                                    <td>${response.gender}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Religion</th>
+                                    <td>${response.religion}</td>
+                                </tr>
+                            </table>
+                    `;
+
+                    $("#studentInfo").html(item);
+                    $("#showModal").modal('show');
+
+                }
+            })
+        }
     </script>
 @endpush

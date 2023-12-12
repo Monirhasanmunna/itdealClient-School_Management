@@ -65,4 +65,10 @@ class DrawLotteryController extends Controller
         return response()->json($rejectedApplicants);
     }
 
+    public function SelectedStudentInfo($id)
+    {
+        $selectedApplicants = LotteryStudent::where('isSelected',true)->where('id',$id)->first();
+        return response()->json($selectedApplicants);
+    }
+
 }

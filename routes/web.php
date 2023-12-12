@@ -23,6 +23,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/selected-applicant',[DrawLotteryController::class,'getSelectedApplicant'])->name('selected-applicant');
         Route::get('/rejected-applicant',[DrawLotteryController::class,'getRejectedApplicant'])->name('rejected-applicant');
         Route::get('/result',[DrawLotteryController::class,'lotteryResult'])->name('result');
+
+        Route::get('/selected-student/{id}/show',[DrawLotteryController::class,'SelectedStudentInfo'])->name('selected-student-info');
+
     });
 
 require __DIR__.'/userManagement.php';
