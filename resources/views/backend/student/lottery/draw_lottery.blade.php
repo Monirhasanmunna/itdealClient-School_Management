@@ -23,7 +23,7 @@
                             <div class="col-12 col-xl-4">
                                 <div class="form-group">
                                     <label for="number_seat">Number Of Seat <span class="text-danger">*</span></label>
-                                    <input type="number" class="form-control" id="number_of_seat" name="number_of_seat" placeholder="Number Of Seat">
+                                    <input type="number" class="form-control" id="number_of_seat" name="number_of_seat" placeholder="Number of seat">
                                     <span class="text-danger d-none" id="errorMsg"></span>
                                 </div>
                             </div>
@@ -96,8 +96,12 @@
                     data        : formData,
                     success     : (response)=>{
                         if(response){
-                            getSelectedApplicant();
-                            toastr.success('Draw Success fully');
+                            if(response.status === 200){
+                                toastr.success(`${response.message}`);
+                                getSelectedApplicant();
+                            }else{
+                                toastr.error(`${response.message}`);
+                            }
                         }
                     },
 
@@ -150,8 +154,6 @@
                     }
                 });
             }
-
-            
 
         });
     </script>

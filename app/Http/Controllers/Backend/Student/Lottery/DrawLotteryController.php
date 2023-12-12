@@ -35,16 +35,26 @@ class DrawLotteryController extends Controller
 
         $applicants = LotteryStudent::where('isSelected', false)->inRandomOrder()->take($request->number_of_seat)->select('id')->get();
 
-        foreach ($applicants as $key => $applicant) {
-           $student = LotteryStudent::find($applicant->id);
-           $student->isSelected = true;
-           $student->save();
+
+        if(!$applicants->count() < $request->number_of_seat || $applicants->count() == $request->number_of_seat){
+            
+            foreach ($applicants as $key => $applicant) {
+                $student = LotteryStudent::find($applicant->id);
+                $student->isSelected = true;
+                $student->save();
+             }
+     
+             return response()->json([
+                 'status' => 200,
+                 'message' => 'Draw completed successfully'
+             ]);
+        }else{
+            return response()->json([
+                'status' => 400,
+                'message' => 'Insufficient remaining applicants.'
+            ]);
         }
 
-        return response()->json([
-            'status' => 200
-        ]);
-        
     }
 
 
