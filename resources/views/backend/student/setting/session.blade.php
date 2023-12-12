@@ -1,5 +1,9 @@
 @extends('app')
 
+@push('style')
+    
+@endpush
+
 @push('title')
     Academic Year
 @endpush

@@ -86,10 +86,8 @@
     }
 }
 
-.piChart-wrapper{
-    position: relative;
-    margin: auto;
-    max-width: 349px;
-    min-height: 373px;
+.badge{
+    padding: 5px !important;
+    font-size: 86% !important;
 }
 

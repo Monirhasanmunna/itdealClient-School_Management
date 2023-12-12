@@ -122,17 +122,17 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
 
-        <div class="modal-header">
-          <h4 style="font-size: 27px" class="modal-title" id="myModalLabel">Selected Student</h4>
-          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+        <div class="modal-header text-white" style="background-color: #27A074">
+          <h4 style="font-size: 27px" class="modal-title" id="myModalLabel">Selected Student Info</h4>
+          <button type="button" class="close text-white" data-dismiss="modal"><span aria-hidden="true">×</span>
           </button>
         </div>
 
         <div class="modal-body">
           <div class="card">
-            <div class="card-header">
+            {{-- <div class="card-header">
                 <h2 style="font-size: 25px">Student Info :</h2>
-            </div>
+            </div> --}}
             <div class="card-body">
                 <div id="studentInfo">
 
@@ -151,7 +151,7 @@
         </div>
 
         <div class="modal-footer">
-            <button type="button" class="btn btn-secondary next-btn">Next</button>
+            <button type="button" class="btn btn-info next-btn">Next <i class="fa-solid fa-circle-arrow-right"></i></button>
         </div>
 
       </div>
