@@ -109,7 +109,7 @@
 
 {{-- show modal --}}
 <div class="modal fade bs-example-modal-lg" id="showModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl">
       <div class="modal-content">
 
         <div class="modal-header">
@@ -125,15 +125,24 @@
             </div>
             <div class="card-body">
                 <div id="studentInfo">
-                    
+
                 </div>
+
+                <div class="d-none my-3" id="modalSpinner">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                        <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
           </div>
         </div>
 
-        {{-- <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div> --}}
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary next-btn">Next</button>
+        </div>
 
       </div>
     </div>
@@ -143,7 +152,9 @@
 
 @push('js')
     <script>
+        let allIds = '';
         $(document).ready(function(){
+            
             getSelectedApplicant();
 
             function getSelectedApplicant(){
@@ -163,9 +174,10 @@
                     dataType : "JSON",
                     success : (response)=>{
                         console.log(response);
-                        if(response.length > 0){
+                        allIds = response.allId;
+                        if(response.applications.length > 0){
 
-                            $.each(response,function(i,v){
+                            $.each(response.applications,function(i,v){
                                 winRows += `
                                     <tr>
                                         <td>${v.applicant_id}</td>
@@ -196,7 +208,7 @@
                     Type : 'GET',
                     dataType : "JSON",
                     success : (response)=>{
-                        console.log(response);
+                
                         if(response.length > 0){
 
                             $.each(response,function(i,v){
@@ -225,7 +237,38 @@
             }
         });
 
+
+        let currentIndex = 0;
+
+        $(".next-btn").on('click',function(){
+
+            if(currentIndex < allIds.length){
+                let currentId = allIds[currentIndex];
+                
+                showItem(currentId);
+            }else{
+                let item = `
+                    <div class="d-flex justify-content-center justify-item-center">
+                        <h1>The End</h1>
+                    </div>
+                `;
+
+                $("#studentInfo").html(item);
+                $(".next-btn").addClass('d-none');
+            }
+        });
+
+
         function showItem(id){
+            let index = allIds.indexOf(id);
+            currentIndex = index;
+            currentIndex++;
+
+            $("#studentInfo").empty();
+            $("#modalSpinner").removeClass('d-none');
+            $(".next-btn").removeClass('d-none');
+            
+
             $.ajax({
                 url :  `/lottery/selected-student/${id}/show`,
                 type : "GET",
@@ -266,11 +309,13 @@
                             </table>
                     `;
 
+                    $("#modalSpinner").addClass('d-none');
                     $("#studentInfo").html(item);
                     $("#showModal").modal('show');
 
                 }
-            })
+            });
         }
+
     </script>
 @endpush

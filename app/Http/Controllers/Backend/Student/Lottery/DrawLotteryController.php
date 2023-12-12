@@ -51,7 +51,15 @@ class DrawLotteryController extends Controller
     public function getSelectedApplicant()
     {
         $selectedApplicants = LotteryStudent::where('isSelected',true)->get();
-        return response()->json($selectedApplicants);
+
+        $allId = $selectedApplicants->map(function($item){
+            return $item['id'];
+        });
+
+        return response()->json([  
+           'applications' => $selectedApplicants,
+           'allId' => $allId
+        ]);
     }
 
     public function lotteryResult()
