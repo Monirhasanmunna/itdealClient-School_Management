@@ -1,5 +1,9 @@
 @extends('app')
 
+@push('title')
+    Dashboard
+@endpush
+
 @section('content')
 <div class="row">
 {{-- page title section --}}

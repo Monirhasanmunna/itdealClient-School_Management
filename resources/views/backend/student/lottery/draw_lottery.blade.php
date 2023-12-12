@@ -4,6 +4,10 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
 @endpush
 
+@push('title')
+    Draw Lottery
+@endpush
+
 @section('content')
 <div class="row">
     <div class="col-md-12 col-sm-12">

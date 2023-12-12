@@ -1,5 +1,9 @@
 @extends('app')
 
+@push('title')
+    Roles
+@endpush
+
 @section('content')
 {{-- <div class="page-title">
     <div class="title_left">
