@@ -104,3 +104,11 @@
     color: #5A738E;
 }
 
+.contentPage{
+    background-image: url('../images/school2.png');
+    background-size: cover;
+    background-position: center;
+    position: relative; 
+    min-height: 100%; 
+    box-sizing: border-box;
+}

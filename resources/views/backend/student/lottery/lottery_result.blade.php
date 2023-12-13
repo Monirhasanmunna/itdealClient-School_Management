@@ -7,6 +7,7 @@
             max-width: 1817px;
         }
     }
+
 </style>
 @endpush
 
@@ -119,7 +120,7 @@
 
 {{-- show modal --}}
 <div class="modal fade bs-example-modal-lg" id="showModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xl" >
       <div class="modal-content">
 
         <div class="modal-header text-white" style="background-color: #27A074">
@@ -128,18 +129,15 @@
           </button>
         </div>
 
-        <div class="modal-body">
-          <div class="card">
-            {{-- <div class="card-header">
-                <h2 style="font-size: 25px">Student Info :</h2>
-            </div> --}}
-            <div class="card-body">
+        <div class="modal-body p-0">
+          <div class="">
+            <div class="">
                 <div id="studentInfo">
-
+                    
                 </div>
 
                 <div class="d-none my-3" id="modalSpinner">
-                    <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center align-items-center" style="height: 718px">
                         <div class="spinner-border" role="status">
                         <span class="sr-only">Loading...</span>
                         </div>
@@ -164,7 +162,7 @@
     <script>
         let allIds = '';
         $(document).ready(function(){
-            
+
             getSelectedApplicant();
 
             function getSelectedApplicant(){
@@ -258,8 +256,8 @@
                 showItem(currentId);
             }else{
                 let item = `
-                    <div class="d-flex justify-content-center justify-item-center">
-                        <h1>The End</h1>
+                    <div class="d-flex justify-content-center align-items-center" style="height: 718px">
+                        <h1 style="font-size:150px;">The End</h1>
                     </div>
                 `;
 
@@ -286,37 +284,13 @@
                 success : (response)=>{
                     console.log(response);
                     let item = `
-                            <table class="table table-striped table-bordered">
-                                <tr>
-                                    <th style='font-size:21px;'>Student Name</th>
-                                    <td style='font-size:19px;'>${response.name}</td>
-                                </tr>
-
-                                <tr>
-                                    <th style='font-size:21px;'>Aplicant No.</th>
-                                    <td style='font-size:19px;'>${response.applicant_id}</td>
-                                </tr>
-
-                                <tr>
-                                    <th style='font-size:21px;'>Father's Name</th>
-                                    <td style='font-size:19px;'>${response.father_name}</td>
-                                </tr>
-
-                                <tr>
-                                    <th style='font-size:21px;'>Mother's Name</th>
-                                    <td style='font-size:19px;'>${response.mother_name}</td>
-                                </tr>
-
-                                <tr>
-                                    <th style='font-size:21px;'>Gender</th>
-                                    <td style='font-size:19px;'>${response.gender}</td>
-                                </tr>
-
-                                <tr>
-                                    <th style='font-size:21px;'>Religion</th>
-                                    <td style='font-size:19px;'>${response.religion}</td>
-                                </tr>
-                            </table>
+                        <div class="d-flex justify-content-center contentPage" style="height: 750px">
+                            <div class="modalWrapper text-center" style="padding-top: 100px">
+                                <h1 style="font-size: 100px;color:black">${response.name}</h1>
+                                <h1 style="font-size: 40px;color:black;padding:20px;">${response.applicant_id}</h1>
+                                <h1 style="font-size: 50px;color:black">${response.father_name}</h1>
+                            </div>
+                        </div>
                     `;
 
                     $("#modalSpinner").addClass('d-none');
