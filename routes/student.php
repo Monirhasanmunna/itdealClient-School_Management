@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Student\InitialSetup\GroupController;
 use App\Http\Controllers\Backend\Student\InitialSetup\SectionController;
 use App\Http\Controllers\Backend\Student\InitialSetup\SessionController;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,16 @@ Route::group(['as'=>'student.','prefix'=>'student'],function(){
             Route::get('/edit/{id}',[SectionController::class,'edit']);
             Route::post('/update',[SectionController::class,'update'])->name('update');
             Route::any('/delete/{id}',[SectionController::class,'destroy']);
+        });
+
+
+        Route::group(['as'=>'group.','prefix'=>'group'],function(){
+            Route::get('/',[GroupController::class,'index'])->name('index');
+            Route::get('/get-group',[GroupController::class,'getGroup'])->name('get-group');
+            Route::post('/store',[GroupController::class,'store'])->name('store');
+            Route::get('/edit/{id}',[GroupController::class,'edit']);
+            Route::post('/update',[GroupController::class,'update'])->name('update');
+            Route::any('/delete/{id}',[GroupController::class,'destroy']);
         });
 
     });

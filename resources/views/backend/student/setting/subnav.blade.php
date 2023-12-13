@@ -7,18 +7,12 @@
           @can('student.setting.class')
           <a class="btn" id="classNav">Class</a>
           @endcan
-          @can('student.setting.shift')
-          <a class="btn" id="shiftNav">Shift</a>
-          @endcan
           @can('student.setting.section')
           <a class="btn" id="sectionNav" href="{{route('student.setting.section.index')}}">Section</a>
           @endcan
           @can('student.setting.group')
-          <a class="btn" id="groupNav">Group</a>
+          <a class="btn" id="groupNav" href="{{route('student.setting.group.index')}}">Group</a>
           @endcan
-          {{-- @can('student.setting.student category')
-          <a class="btn" id="categoryNav">Student Category</a>
-          @endcan --}}
       </div>
     </div>
 </div>
