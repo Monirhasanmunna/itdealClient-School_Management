@@ -5,7 +5,7 @@
 @endpush
 
 @push('title')
-    Academic Year
+    Section List
 @endpush
 
 @section('content')
@@ -16,7 +16,7 @@
 
         <div class="x_panel">
           <div class="x_title">
-            <h2>Academic Years</h2>
+            <h2>Sections</h2>
 
             <div class="text-right">
                 <button class="btn btn-success " data-toggle="modal" data-target="#createModal"><i class="fa-solid fa-square-plus mr-2" style="font-size: 18px"></i>New Create</button>
@@ -30,7 +30,8 @@
                 <thead>
                   <tr class="headings">
                     <th class="column-title text-center" width='5%'>SL </th>
-                    <th class="column-title">Academic Year</th>
+                    <th class="column-title">Name</th>
+                    <th class="column-title">Code</th>
                     <th class="column-title">Status</th>
                     <th class="column-title no-link last text-center" width='10%'><span class="nobr">Action</span></th>
                   </tr>
@@ -52,7 +53,7 @@
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title">Session Create</h5>
+              <h5 class="modal-title">Section Create</h5>
               <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
               </button>
           </div>
@@ -61,7 +62,7 @@
               @csrf
                   <div class="form-group">
                       <label for="name">Name <span class="text-danger">*</span></label>
-                      <input type="text" id="name" class="form-control input-default" name="session_year" placeholder="Enter Session">
+                      <input type="text" id="name" class="form-control input-default" name="name" placeholder="Enter Section Name">
                       <span id="errorMessage" class="d-none text-danger text-small"></span>
                   </div>
               </div>
@@ -81,7 +82,7 @@
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title">Session Edit</h5>
+              <h5 class="modal-title">Section Edit</h5>
               <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
               </button>
           </div>
@@ -107,21 +108,22 @@
 
 @push('js')
 <script>
-    $("#sessionNav").addClass('activeNav');
+    $("#sectionNav").addClass('activeNav');
+
     $(document).ready(function(){
         $("#form").submit(function(e){
             e.preventDefault();
             const formData = $(this).serialize();
 
             $.ajax({
-                url : `{{route('student.setting.session.store')}}`,
+                url : `{{route('student.setting.section.store')}}`,
                 type : 'POST',
                 data : formData,
                 dataType : 'json',
                 success : (response)=>{
                     if(response.status === 200){
                         toastr.success(`${response.message}`);
-                        getSessions();
+                        getSections();
                         $("#createModal").modal('hide');
                         $("#createModal").find("#form")[0].reset();
                     }
@@ -138,10 +140,10 @@
     });
 
 
-    getSessions();
-    async function getSessions(){
+    getSections();
+    async function getSections(){
         await $.ajax({
-            url : `{{route('student.setting.session.get-sessions')}}`,
+            url : `{{route('student.setting.section.get-section')}}`,
             type : "GET",
             dataType : "JSON",
             success : (response)=>{
@@ -151,8 +153,8 @@
                     rows += `
                         <tr>
                             <td class="text-center">${i+1}</td>
-                            <td>${v.session_year}</td>
-
+                            <td>${v.name}</td>
+                            <td>${v.code ? v.code : 'N/A'}</td>
                             <td>${status(v.status)}</td>
 
                             <td class="text-center">
@@ -181,12 +183,12 @@
 
      function editdata(id){
             $.ajax({
-                url : `/student/initial-setup/academic-year/edit/${id}`,
+                url : `/student/initial-setup/section/edit/${id}`,
                 type : 'GET',
                 success : (data)=>{
                     $("#formInput").html(`
                         <label for="name">Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control input-default" name="session_year" value='${data.session_year}'>
+                        <input type="text" class="form-control input-default" name="name" value='${data.name}'>
                         <span id="editErrorMessage" class=" text-danger text-small"></span>
 
                         <input type="hidden" name="id" value='${data.id}'>
@@ -205,13 +207,13 @@
             const updateData = $(this).serialize();
 
             $.ajax({
-                url : `{{route('student.setting.session.update')}}`,
+                url : `{{route('student.setting.section.update')}}`,
                 type : 'POST',
                 data : updateData,
                 success : (response)=>{
                     if(response.status === 200){
                         toastr.success(`${response.message}`);
-                        getSessions();
+                        getSections();
                         $("#editModal").modal('hide');
                     }
                 },
@@ -243,12 +245,12 @@
                 icon: "success"
                 });
                     $.ajax({
-                        url : `/student/initial-setup/academic-year/delete/${id}`,
+                        url : `/student/initial-setup/section/delete/${id}`,
                         type : 'GET',
                         success : (response)=>{
                             if(response.status === 200){
                                 toastr.success(`${response.message}`);
-                                getSessions();
+                                getSections();
                             }
                         },
                     });

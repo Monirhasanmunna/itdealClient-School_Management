@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Student\InitialSetup\SectionController;
 use App\Http\Controllers\Backend\Student\InitialSetup\SessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,16 @@ Route::group(['as'=>'student.','prefix'=>'student'],function(){
             Route::get('/edit/{id}',[SessionController::class,'edit']);
             Route::post('/update',[SessionController::class,'update'])->name('update');
             Route::any('/delete/{id}',[SessionController::class,'destroy']);
+        });
+
+
+        Route::group(['as'=>'section.','prefix'=>'section'],function(){
+            Route::get('/',[SectionController::class,'index'])->name('index');
+            Route::get('/get-section',[SectionController::class,'getSection'])->name('get-section');
+            Route::post('/store',[SectionController::class,'store'])->name('store');
+            Route::get('/edit/{id}',[SectionController::class,'edit']);
+            Route::post('/update',[SectionController::class,'update'])->name('update');
+            Route::any('/delete/{id}',[SectionController::class,'destroy']);
         });
 
     });

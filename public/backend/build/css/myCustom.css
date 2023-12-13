@@ -91,3 +91,9 @@
     font-size: 86% !important;
 }
 
+
+.activeNav{
+    background-color: #0069D9;
+    color: white;
+}
+
