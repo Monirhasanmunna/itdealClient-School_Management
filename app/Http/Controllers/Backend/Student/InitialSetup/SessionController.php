@@ -13,8 +13,13 @@ class SessionController extends Controller
      */
     public function index()
     {
-        $sessions = Session::orderBy('id','desc')->get();
-        return view('backend.student.setting.session',compact('sessions'));
+        return view('backend.student.setting.session');
+    }
+
+    public function getSessions()
+    {
+        $sessions = Session::where('status','active')->orderBy('id','desc')->get();
+        return response()->json($sessions);
     }
 
     /**
@@ -30,7 +35,18 @@ class SessionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'session_year' => 'required|unique:sessions',
+        ]);
+
+        Session::create([
+            'session_year' => $request->session_year
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'message'=> 'Session create successfully',
+        ]);
     }
 
     /**
@@ -46,15 +62,27 @@ class SessionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return Session::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'id' => 'required',
+            'session_year' => 'required|unique:sessions,session_year,'.$request->id
+        ]);
+
+        Session::find($request->id)->update([
+            'session_year' => $request->session_year
+        ]);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Session update successfully'
+        ]);
     }
 
     /**
@@ -62,6 +90,11 @@ class SessionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Session::find($id)->delete();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Session deleted successfully'
+        ]);
     }
 }

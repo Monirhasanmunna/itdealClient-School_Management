@@ -16,11 +16,10 @@
 
         <div class="x_panel">
           <div class="x_title">
-            <h2>Academic Years <small>All academic year list here</small></h2>
+            <h2>Academic Years</h2>
 
             <div class="text-right">
-                {{-- <a href="{{route('userManagement.role.create')}}" class="btn btn-success"><i class="fa-solid fa-square-plus mr-2" style="font-size: 18px"></i>Add New</a> --}}
-                {{-- <button class="btn btn-success " data-toggle="modal" data-target="#basicModal"><i class="fa-solid fa-square-plus mr-2" style="font-size: 18px"></i>New Create</button> --}}
+                <button class="btn btn-success " data-toggle="modal" data-target="#createModal"><i class="fa-solid fa-square-plus mr-2" style="font-size: 18px"></i>New Create</button>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -37,31 +36,8 @@
                   </tr>
                 </thead>
 
-                <tbody>
-                    @foreach ($sessions as $session)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{$session->session_year}}</td>
-                            <td>
-                                @if ($session->status == 'active')
-                                <span class="badge badge-success">Active</span>
-                                @else
-                                <span class="badge badge-success">Inactive</span>
-                                @endif
-                                
-                            </td>
-
-                            <td class="text-center">
-                                <a href="javascript:void(0)" onclick="editdata({{$session->id}})" class="btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
-                                <a href="javascript:void(0)" onclick="deleteItem({{$session->id}})" class="btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
-                            </td>
-
-                            <form action="{{route('userManagement.role.destroy',$session->id)}}" method="POST" class="d-none deleteForm-{{$session->id}}">
-                              @method('PUT')
-                              @csrf
-                            </form>
-                        </tr>
-                    @endforeach
+                <tbody id="tBody">
+                    
                 </tbody>
               </table>
             </div>
@@ -72,11 +48,11 @@
 
 
 <!-- store Modal -->
-<div class="modal fade" id="basicModal">
+<div class="modal fade" id="createModal">
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title">Role Create</h5>
+              <h5 class="modal-title">Session Create</h5>
               <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
               </button>
           </div>
@@ -85,7 +61,7 @@
               @csrf
                   <div class="form-group">
                       <label for="name">Name <span class="text-danger">*</span></label>
-                      <input type="text" id="name" class="form-control input-default" name="name" placeholder="Enter name">
+                      <input type="text" id="name" class="form-control input-default" name="session_year" placeholder="Enter Session">
                       <span id="errorMessage" class="d-none text-danger text-small"></span>
                   </div>
               </div>
@@ -105,7 +81,7 @@
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title">Role Edit</h5>
+              <h5 class="modal-title">Session Edit</h5>
               <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
               </button>
           </div>
@@ -118,7 +94,7 @@
                       </div>
                   </div>
                   <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
                       <button type="submit" class="btn btn-primary">Submit</button>
                   </div>
               </form>
@@ -137,42 +113,87 @@
             const formData = $(this).serialize();
 
             $.ajax({
-                url : '/user_management/role/store',
+                url : `{{route('student.setting.session.store')}}`,
                 type : 'POST',
                 data : formData,
                 dataType : 'json',
                 success : (response)=>{
-                    location.reload();
+                    if(response.status === 200){
+                        toastr.success(`${response.message}`);
+                        getSessions();
+                        $("#createModal").modal('hide');
+                        $("#createModal").find("#form")[0].reset();
+                    }
                 },
                 error : (error)=>{
                     if(error){
                        $("#errorMessage").html(error.responseJSON.message);
                        $("#errorMessage").removeClass('d-none');
-                       $("#basicModal").modal('show'); 
+                       $("#createModal").modal('show'); 
                     }
                 }
             });
         });
     });
 
-    async function editdata(id){
-           await $.ajax({
-                url : `/user_management/role/edit/${id}`,
+
+    getSessions();
+    async function getSessions(){
+        await $.ajax({
+            url : `{{route('student.setting.session.get-sessions')}}`,
+            type : "GET",
+            dataType : "JSON",
+            success : (response)=>{
+                
+                let rows = '';
+                $.each(response,function(i,v){
+                    rows += `
+                        <tr>
+                            <td class="text-center">${i+1}</td>
+                            <td>${v.session_year}</td>
+
+                            <td>${status(v.status)}</td>
+
+                            <td class="text-center">
+                                <a href="javascript:void(0)" onclick="editdata(${v.id})" class="btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="javascript:void(0)" onclick="deleteItem(${v.id})" class="btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                function status(status){
+                    if(status === 'active'){
+                       return `<span class='badge badge-primary'>Active</span>`
+                    }else{
+                        return `<span class='badge badge-danger'>Active</span>`
+                    }
+                }
+
+                $("#tBody").html(rows);
+
+            }
+        });
+    }
+
+
+
+     function editdata(id){
+            $.ajax({
+                url : `/student/initial-setup/academic-year/edit/${id}`,
                 type : 'GET',
                 success : (data)=>{
                     $("#formInput").html(`
-                            <label for="name">Name <span class="text-danger">*</span></label>
-                            <input type="text" class="form-control input-default" name="name" value='${data.name}'>
-                            <span id="editErrorMessage" class=" text-danger text-small"></span>
+                        <label for="name">Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control input-default" name="session_year" value='${data.session_year}'>
+                        <span id="editErrorMessage" class=" text-danger text-small"></span>
 
-                            <input type="hidden" name="data_id" value='${data.id}'>
-
+                        <input type="hidden" name="id" value='${data.id}'>
                     `);
 
                     $("#editModal").modal('show');
                 }
 
-               
             });
         }
 
@@ -183,11 +204,15 @@
             const updateData = $(this).serialize();
 
             $.ajax({
-                url : `/user_management/role/update/data`,
+                url : `{{route('student.setting.session.update')}}`,
                 type : 'POST',
                 data : updateData,
-                success : (success)=>{
-                    location.reload();
+                success : (response)=>{
+                    if(response.status === 200){
+                        toastr.success(`${response.message}`);
+                        getSessions();
+                        $("#editModal").modal('hide');
+                    }
                 },
 
                 error : (error)=>{
@@ -216,9 +241,17 @@
                 text: "Your file has been deleted.",
                 icon: "success"
                 });
-
-                $(`.deleteForm-${id}`).submit();
-            }
+                    $.ajax({
+                        url : `/student/initial-setup/academic-year/delete/${id}`,
+                        type : 'GET',
+                        success : (response)=>{
+                            if(response.status === 200){
+                                toastr.success(`${response.message}`);
+                                getSessions();
+                            }
+                        },
+                    });
+                }
             });
         }
 </script>
