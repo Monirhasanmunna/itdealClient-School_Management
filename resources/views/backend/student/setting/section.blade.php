@@ -26,7 +26,7 @@
 
           <div class="x_content">
             <div class="table-responsive">
-              <table class="table table-striped jambo_table bulk_action table-bordered" id="datatable">
+              <table class="table table-striped jambo_table bulk_action table-bordered" id="">
                 <thead>
                   <tr class="headings">
                     <th class="column-title text-center" width='5%'>SL </th>
@@ -41,6 +41,16 @@
                     
                 </tbody>
               </table>
+
+              <div class="my-3" id="modalSpinner">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+              </div>
+
+
             </div>
           </div>
         </div>
@@ -173,6 +183,7 @@
                     }
                 }
 
+                $("#modalSpinner").addClass('d-none');
                 $("#tBody").html(rows);
 
             }

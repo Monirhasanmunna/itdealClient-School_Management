@@ -93,7 +93,14 @@
 
 
 .activeNav{
-    background-color: #0069D9;
-    color: white;
+    background-color: #0069D9 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.navBtn{
+    background-color:rgb(233, 233, 234) ;
+    border-radius: 4px;
+    color: #5A738E;
 }
 
