@@ -5,7 +5,7 @@
           <a class="btn navBtn" id="sessionNav" href="{{route('student.setting.session.index')}}">Academic Years</a>
           @endcan
           @can('student.setting.class')
-          <a class="btn navBtn" id="classNav">Class</a>
+          <a class="btn navBtn" href="{{route('student.setting.class.index')}}" id="classNav">Class</a>
           @endcan
           @can('student.setting.section')
           <a class="btn navBtn" id="sectionNav" href="{{route('student.setting.section.index')}}">Section</a>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\Student\InitialSetup\ClassController;
 use App\Http\Controllers\Backend\Student\InitialSetup\GroupController;
 use App\Http\Controllers\Backend\Student\InitialSetup\SectionController;
 use App\Http\Controllers\Backend\Student\InitialSetup\SessionController;
@@ -38,6 +39,16 @@ Route::group(['as'=>'student.','prefix'=>'student'],function(){
             Route::get('/edit/{id}',[GroupController::class,'edit']);
             Route::post('/update',[GroupController::class,'update'])->name('update');
             Route::any('/delete/{id}',[GroupController::class,'destroy']);
+        });
+
+
+        Route::group(['as'=>'class.','prefix'=>'class'],function(){
+            Route::get('/',[ClassController::class,'index'])->name('index');
+            Route::get('/get-class',[ClassController::class,'getClass'])->name('get-class');
+            Route::post('/store',[ClassController::class,'store'])->name('store');
+            Route::get('/edit/{id}',[ClassController::class,'edit']);
+            Route::post('/update',[ClassController::class,'update'])->name('update');
+            Route::any('/delete/{id}',[ClassController::class,'destroy']);
         });
 
     });
