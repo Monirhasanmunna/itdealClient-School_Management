@@ -122,30 +122,30 @@
 
 <!-- edit Modal -->
 <div class="modal fade" id="editModal">
-  <div class="modal-dialog" role="document">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h5 class="modal-title">Class Edit</h5>
-              <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-              </button>
-          </div>
-          <div id="modalForm">
-              <form id="editForm">
-                  @csrf
-                  <div class="modal-body" id="modalBody">
-                      <div class="form-group" id="formInput">
-
-                      </div>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="reset" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-primary">Submit</button>
-                  </div>
-              </form>
-          </div>
-      </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Class Edit</h5>
+                <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <form id="editForm">
+                @csrf
+                    
+                <div id="editModalData">
+                    
+                </div>
+  
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+            </form>
+        </div>
+    </div>
   </div>
-</div>
 <!-- edit Modal -->
 @endsection
 
@@ -268,15 +268,76 @@
                 url : `/student/initial-setup/class/edit/${id}`,
                 type : 'GET',
                 success : (data)=>{
-                    $("#formInput").html(`
-                        <label for="name">Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control input-default" name="name" value='${data.name}'>
-                        <span id="editErrorMessage" class=" text-danger text-small"></span>
+                    console.log(data);
+                    $("#editModalData").html(`
+                        <div class="form-group">
+                            <label for="name">Name<span class="text-danger">*</span></label>
+                            <input type="text" id="name" class="form-control input-default" name="name" value='${data.name}' placeholder="Enter Class Name">
+                            <span id="errorMessage" class="d-none text-danger text-small"></span>
+                        </div>
+    
+                        <div class="form-group">
+                        <label for="name">Section's<span class="text-danger">*</span></label>
+                        <select class="form-control selectTwo" name="section_ids[]" multiple="multiple" style="width:100%">
+                            <option></option>
+                            @foreach ($sections as $section)
+                                <option ${selectedSection(data.sections, {{$section['id']}})} value="{{$section->id}}">{{$section->name}}</option>
+                            @endforeach
+                        </select>
+                        </div>
+    
+                        <div class="form-group">
+                        <label for="name">Group's<span class="text-danger">*</span></label>
+                        <select class="form-control selectTwo2" name="group_ids[]" multiple="multiple" style="width:100%">
+                            <option></option>
+                            @foreach ($groups as $group)
+                                <option ${selectedGroups(data.groups, {{$group['id']}})} value="{{$group->id}}">{{$group->name}}</option>
+                            @endforeach
+                        </select>
+                        </div>
 
-                        <input type="hidden" name="id" value='${data.id}'>
+                        <input type='hidden' name='data_id' value='${data.id}' />
                     `);
 
-                    $("#editModal").modal('show');
+                     $("#editModal").modal('show');
+
+                    //  select 2 initial in modal
+                     $('.selectTwo').select2({
+                        placeholder: "Select Section's",
+                        allowClear: true,
+                        dropdownParent: $('#editModal')
+                    });
+
+                    //  select 2 initial in modal
+                    $('.selectTwo2').select2({
+                        placeholder: "Select Group's",
+                        allowClear: true,
+                        dropdownParent: $('#editModal')
+                    });
+
+
+                    // selected sections function
+                    function selectedSection(sections , id){
+                       const sectionIds = sections.map((item)=> item.id);
+
+                       if(sectionIds.includes(id)){
+                            return 'selected';
+                       }else{
+                            return '';
+                       }
+                    }
+
+                    // selected groups function
+                    function selectedGroups(groups , id){
+                       const groupIds = groups.map((item)=> item.id);
+                       
+                       if(groupIds.includes(id)){
+                            return 'selected';
+                       }else{
+                            return '';
+                       }
+                    }
+
                 }
 
             });
@@ -293,6 +354,7 @@
                 type : 'POST',
                 data : updateData,
                 success : (response)=>{
+                    console.log(response);
                     if(response.status === 200){
                         toastr.success(`${response.message}`);
                         getClass();

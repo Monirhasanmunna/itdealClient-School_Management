@@ -42,7 +42,7 @@ class ClassController extends Controller
     {
         // return $request->all();
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:academic_classes',
         ]);
 
         $class = AcademicClass::create([
@@ -73,15 +73,34 @@ class ClassController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $class = AcademicClass::with(['sections','groups'])->find($id);
+        return $class;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:academic_classes,name,'.$request['data_id'],
+        ]);
+
+        $class = AcademicClass::find($request->data_id);
+
+        $class->update([
+            'name' => $request->name,
+            'code' => Str::slug($request->name),
+            'status' => 'active'
+        ]);
+
+        $class->groups()->sync($request->group_ids);
+        $class->sections()->sync($request->section_ids);
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Class updated successfully'
+        ]);
     }
 
     /**
@@ -89,6 +108,11 @@ class ClassController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        AcademicClass::find($id)->delete();
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Class deleted successfully'
+        ]);
     }
 }
