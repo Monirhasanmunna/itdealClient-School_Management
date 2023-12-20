@@ -14,8 +14,8 @@
         <li class="mt-2"><a><i class="fa fa-sitemap"></i> Student <span class="fa fa-chevron-down"></span></a>
           <ul class="nav child_menu" style="display: none;">
 
-              <li><a href="#level1_1">Add Single Student</a>
-              <li><a href="#level1_1">Add Multiple Student</a>
+              <li><a href="{{route('student.index')}}">Student List</a>
+              {{-- <li><a href="#level1_1">Add Multiple Student</a> --}}
 
               </li><li class=""><a>Report<span class="fa fa-chevron-down"></span></a>
                 <ul class="nav child_menu" style="display: none;">

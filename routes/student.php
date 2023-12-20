@@ -4,11 +4,23 @@ use App\Http\Controllers\Backend\Student\InitialSetup\ClassController;
 use App\Http\Controllers\Backend\Student\InitialSetup\GroupController;
 use App\Http\Controllers\Backend\Student\InitialSetup\SectionController;
 use App\Http\Controllers\Backend\Student\InitialSetup\SessionController;
+use App\Http\Controllers\Backend\Student\StudentController;
 use Illuminate\Support\Facades\Route;
 
 
 
 Route::group(['as'=>'student.','prefix'=>'student'],function(){
+
+    Route::get('/',[StudentController::class,'index'])->name('index');
+    Route::get('/create',[StudentController::class,'create'])->name('create');
+
+    Route::post('/store',[StudentController::class,'store'])->name('store');
+    Route::get('/edit/{id}',[StudentController::class,'edit']);
+    Route::post('/update',[StudentController::class,'update'])->name('update');
+    Route::any('/delete/{id}',[StudentController::class,'destroy']);
+    
+    Route::get('/get-section-group/{id}',[StudentController::class,'getSectionAndGroupByClass']);
+    Route::post('filter-student',[StudentController::class,'studentFilter'])->name('filter');
 
     Route::group(['as'=>'setting.','prefix'=>'initial-setup'],function(){
 

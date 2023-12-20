@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('group_id')->nullable();
             $table->string('unique_id')->unique();
             $table->string('name');
+            $table->string('roll');
             $table->string('image')->nullable();
             $table->string('phone_number');
             $table->string('dob');
@@ -27,7 +28,7 @@ return new class extends Migration
             $table->string('blood_group');
             $table->string('father_name');
             $table->string('mother_name');
-            $table->string('parents_contact');
+            $table->string('guardian_phone');
             $table->string('district');
             $table->string('upazila');
             $table->string('post_office');

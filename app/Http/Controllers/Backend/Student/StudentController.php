@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Backend\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\AcademicClass;
+use App\Models\Session;
 use Illuminate\Http\Request;
 
 class StudentController extends Controller
@@ -12,7 +14,23 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $classes = AcademicClass::all();
+        return view('backend.student.index',compact('classes'));
+    }
+
+    public function getSectionAndGroupByClass($id)
+    {
+        $class = AcademicClass::with(['sections','groups'])->find($id);
+        return response()->json($class);
+    }
+
+    public function studentFilter(Request $request)
+    {
+        $request->validate([
+            'class' => 'required',
+        ]);
+        
+        return $request->all();
     }
 
     /**
@@ -20,7 +38,10 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        $sessions = Session::all();
+        $classes = AcademicClass::all();
+
+        return view('backend.student.create',compact('sessions','classes'));
     }
 
     /**
