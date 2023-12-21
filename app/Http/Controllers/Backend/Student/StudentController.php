@@ -32,6 +32,34 @@ class StudentController extends Controller
             'class' => 'required',
         ]);
         
+        $query = Student::query();
+
+        if($request->filled('class')){
+            $query->where('class_id',$request->class);
+        }
+
+        if($request->filled('section') && $request->section != Null){
+            $query->where('section_id',$request->section);
+        }
+
+        if($request->filled('group') && $request->group != Null){
+            $query->where('group_id',$request->group);
+        }
+
+        $students = $query->with(['class','section','group'])->orderBy('roll','ASC')->get();
+
+        return $students;
+        // return $request->all();
+    }
+
+
+    public function academicFilter(Request $request)
+    {
+        $request->validate([
+            'session' => 'required',
+            'class' => 'required',
+        ]);
+
         return $request->all();
     }
 

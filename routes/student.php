@@ -21,6 +21,7 @@ Route::group(['as'=>'student.','prefix'=>'student'],function(){
     
     Route::get('/get-section-group/{id}',[StudentController::class,'getSectionAndGroupByClass']);
     Route::post('filter-student',[StudentController::class,'studentFilter'])->name('filter');
+    Route::post('filter-academic',[StudentController::class,'academicFilter'])->name('academic_filter');
 
     Route::group(['as'=>'setting.','prefix'=>'initial-setup'],function(){
 

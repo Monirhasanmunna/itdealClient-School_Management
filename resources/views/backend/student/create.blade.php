@@ -337,7 +337,7 @@
         const formData = $(this).serialize();
        
         $.ajax({
-            url : `{{route('student.filter')}}`,
+            url : `{{route('student.academic_filter')}}`,
             type : "POST",
             dataType : "JSON",
             data : formData,

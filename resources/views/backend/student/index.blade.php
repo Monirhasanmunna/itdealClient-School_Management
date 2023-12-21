@@ -67,15 +67,22 @@
             </form>
         </div>
 
-        <div class="x_panel">
+        <div class="x_panel d-none" id="tableCrad">
           <div class="x_content">
             <div class="table-responsive">
               <table class="table table-striped jambo_table bulk_action table-bordered" id="">
                 <thead>
                   <tr class="headings">
                     <th class="column-title text-center" width='5%'>SL </th>
-                    <th class="column-title">Academic Year</th>
-                    <th class="column-title">Status</th>
+                    <th class="column-title">ID</th>
+                    <th class="column-title">Name</th>
+                    <th class="column-title">Mobile No.</th>
+                    <th class="column-title">Roll</th>
+                    <th class="column-title">Class</th>
+                    <th class="column-title">Section</th>
+                    <th class="column-title">Group</th>
+                    <th class="column-title">Gender</th>
+                    <th class="column-title text-center">Image</th>
                     <th class="column-title no-link last text-center" width='10%'><span class="nobr">Action</span></th>
                   </tr>
                 </thead>
@@ -85,10 +92,10 @@
                 </tbody>
               </table>
 
-              <div class="my-3" id="modalSpinner">
+              <div class="my-3 d-none" id="modalSpinner">
                 <div class="d-flex justify-content-center">
                     <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
+                        <span class="sr-only">Loading...</span>
                     </div>
                 </div>
               </div>
@@ -133,7 +140,7 @@
             dataType : "JSON",
             success : (data)=>{
                 if(data.sections.length > 0){
-                    let sections = '';
+                    let sections = `<option></option>`;
                     $.each(data.sections,function(i,v){
                         sections += `<option value='${v.id}'>${v.name}</option>`;
                     });
@@ -146,7 +153,7 @@
                 }
 
                 if(data.groups.length > 0){
-                    let groups = '';
+                    let groups = `<option></option>`;
                     $.each(data.groups,function(i,v){
                         groups += `<option value='${v.id}'>${v.name}</option>`;
                     });
@@ -164,6 +171,9 @@
 
     $("#filter_form").submit(function(e){
         e.preventDefault();
+
+        $("#tBody").html('');
+        $("#modalSpinner").removeClass('d-none');
         
         const formData = $(this).serialize();
        
@@ -174,6 +184,46 @@
             data : formData,
             success : (data)=>{
                 console.log(data);
+                let rows = '';
+                $.each(data,function(i,v){
+                    rows += `
+                        <tr>
+                            <td class="align-middle text-center">${i+1}</td>
+                            <td class="align-middle">${v.unique_id}</td>
+                            <td class="align-middle">${v.name}</td>
+                            <td class="align-middle">${v.phone_number}</td>
+                            <td class="align-middle">${v.roll}</td>
+                            <td class="align-middle">${v.class.name}</td>
+                            <td class="align-middle">${v.section ? v.section.name : 'N/A'}</td>
+                            <td class="align-middle">${v.group ? v.group.name : 'N/A'}</td>
+                            <td class="align-middle">${v.gender}</td>
+                            <td class='align-middle text-center'>${viewImage(v.image, v.gender)}</td>
+                            <td class="align-middle text-center">
+                                <a href="javascript:void(0)" onclick="editdata(${v.id})" class="btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="javascript:void(0)" onclick="deleteItem(${v.id})" class="btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
+                            </td>
+                            
+                        </tr>
+                    `;
+                });
+
+
+                function viewImage(image, gender){
+                    if(image){
+                        return `<img src='${image}' class='p-1' style='width:50px;height:50px;border:2px solid #27A074;border-radius:50%' />`
+                    }else{
+                        if(gender === 'Female'){
+                            return `<img class='p-1' src='{{asset('backend/file/girl.png')}}' style='width:50px;height:50px;border:2px solid #27A074;border-radius:50%' />`
+                        }else{
+                            return `<img class='p-1' src='{{asset('backend/file/boy.png')}}' style='width:50px;height:50px;border:2px solid #27A074;border-radius:50%' />`
+                        }
+                    }
+                }
+
+
+                $("#modalSpinner").addClass('d-none');
+                $("#tBody").html(rows);
+                $("#tableCrad").removeClass('d-none');
             },
 
             error : (error)=>{
@@ -181,48 +231,6 @@
             }
         });
     });
-
-
-
-    // getSessions();
-    async function getSessions(){
-        await $.ajax({
-            url : `{{route('student.setting.session.get-sessions')}}`,
-            type : "GET",
-            dataType : "JSON",
-            success : (response)=>{
-    
-                let rows = '';
-                $.each(response,function(i,v){
-                    rows += `
-                        <tr>
-                            <td class="text-center">${i+1}</td>
-                            <td>${v.session_year}</td>
-
-                            <td>${status(v.status)}</td>
-
-                            <td class="text-center">
-                                <a href="javascript:void(0)" onclick="editdata(${v.id})" class="btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
-                                <a href="javascript:void(0)" onclick="deleteItem(${v.id})" class="btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
-                            </td>
-                        </tr>
-                    `;
-                });
-
-                function status(status){
-                    if(status === 'active'){
-                       return `<span class='badge badge-primary'>Active</span>`
-                    }else{
-                        return `<span class='badge badge-danger'>Active</span>`
-                    }
-                }
-
-                $("#modalSpinner").addClass('d-none');
-                $("#tBody").html(rows);
-
-            }
-        });
-    }
 
 
         function deleteItem(id){
