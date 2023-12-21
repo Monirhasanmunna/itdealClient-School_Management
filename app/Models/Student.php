@@ -9,7 +9,7 @@ class Student extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','name','image','roll','phone_number','dob','class','session','section','group','religion','gender','blood_group','father_name','mother_name','parents_contact','unique_id','district','upazila','post_office','village'];
+    protected $fillable = ['id','name','image','roll','phone_number','dob','class_id','session_id','section_id','group_id','religion','gender','blood_group','father_name','mother_name','guardian_phone','unique_id','district','upazila','post_office','village'];
 
 
     public function session()

@@ -16,6 +16,12 @@
       .no-preview small{
         font-size: 11px;
       }
+
+      .previewImg{
+        width: 70px;
+        height: 70px;
+        border-radius: 5px;
+      }
 </style>
 @endpush
 
@@ -53,7 +59,7 @@
                                    <option value="{{$session->id}}">{{$session->session_year}}</option> 
                                 @endforeach
                             </select>
-                            <small id="errorMessage" class="text-danger"></small>
+                            {{-- <small id="errorMessage" class="text-danger"></small> --}}
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
@@ -93,122 +99,124 @@
             </form>
         </div>
 
-        <div class="x_panel">
-          <div class="x_content">
-            <h2 style="font-size: 22px;">Student Info :</h2>
+        <form action="{{route('student.store')}}" method="POST" id="studentInfo" enctype="multipart/form-data">
+         @csrf
+         <div class="d-none" id="form_wrapper">
+            <div class="x_panel">
+            <div class="x_content">
+                <h2 style="font-size: 22px;">Student Info :</h2>
+                    <div class="row mt-4">
+                        <div class="col-12 col-md-2">
+                            <div class="form-group">
+                                <label for="roll">Roll <span class="text-small text-danger">*</span></label>
+                                <input type="number" id="roll" name="roll" class="form-control" placeholder="Enter roll number">
+                            </div>
+                        </div>
 
-            <div class="row mt-4">
+                        <div class="col-12 col-md-2">
+                            <div class="form-group">
+                                <label for="name">Name <span class="text-small text-danger">*</span></label>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="Enter name">
+                            </div>
+                        </div>
 
-                <div class="col-12 col-md-2">
-                    <div class="form-group">
-                        <label for="roll">Roll <span class="text-small text-danger">*</span></label>
-                        <input type="number" id="roll" name="roll" class="form-control" placeholder="Enter roll number">
+                        <div class="col-12 col-md-2">
+                            <div class="form-group">
+                                <label for="phone_number">Phone Number <span class="text-small text-danger">*</span></label>
+                                <input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="Enter phone number">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-2">
+                            <div class="form-group">
+                                <label for="dob">Date Of Birth <span class="text-small text-danger">*</span></label>
+                                <input type="date" name="dob" id="dob" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-2">
+                            <div class="form-group">
+                                <label for="religion">Religion <span class="text-small text-danger">*</span></label>
+                            <select name="religion" id="religion" class="form-control">
+                                <option value="Islam">Islam</option>
+                                <option value="Hinduism">Hinduism</option>
+                                <option value="Buddist">Buddist</option>
+                                <option value="Christian">Christian</option>
+                            </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-2">
+                            <div class="form-group">
+                                <label for="gender">Gender <span class="text-small text-danger">*</span></label>
+                                <select name="gender" id="gender" class="form-control">
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-2 mt-2">
+                            <div class="form-group">
+                                <label for="blood_group">Blood Group <span class="text-small text-danger">*</span></label>
+                                <select name="blood_group" id="blood_group" class="form-control">
+                                    <option value="A+">A+ve</option>
+                                    <option value="A-">A-ve</option>
+                                    <option value="B+">B+ve</option>
+                                    <option value="B-">B-ve</option>
+                                    <option value="AB+">AB+ve</option>
+                                    <option value="AB-">AB-ve</option>
+                                    <option value="O+">O+ve</option>
+                                    <option value="O-">O-ve</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-2 mt-2">
+                            <div class="form-group">
+                                <label for="father_name">Father's Name <span class="text-small text-danger">*</span></label>
+                                <input type="text" id="father_name" name="father_name" class="form-control" placeholder="Enter father's name">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-2 mt-2">
+                            <div class="form-group">
+                                <label for="mother_name">Mother's Name <span class="text-small text-danger">*</span></label>
+                                <input type="text" id="mother_name" name="mother_name" class="form-control" placeholder="Enter mother's name">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-2 mt-2">
+                            <div class="form-group">
+                                <label for="guardian_phone">Guardian Phone <span class="text-small text-danger">*</span></label>
+                                <input type="text" id="guardian_phone" name="guardian_phone" class="form-control" placeholder="Enter guardian number">
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-2 mt-2">
+                            <div class="form-group">
+                                <label for="file">Image</label>
+                                <div class="custom-file form-control" style="border: none">
+                                    <input type="file" name="image" class="custom-file-input" id="imageInput" aria-describedby="inputGroupFileAddon01">
+                                    <label class="custom-file-label" for="imageInput">Choose file</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-2 mt-2">
+                            <div class="d-flex ">
+                                <div class="no-preview text-center" id="no-preview">
+                                    <small>No Preview</small>
+                                </div>
+                                <img class="previewImg d-none" id="imagePreview" src="" alt="" srcset="">
+                            </div>
+                        </div>
+
                     </div>
-                </div>
-
-                <div class="col-12 col-md-2">
-                    <div class="form-group">
-                        <label for="name">Name <span class="text-small text-danger">*</span></label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter name">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-2">
-                    <div class="form-group">
-                        <label for="phone_numner">Phone Number <span class="text-small text-danger">*</span></label>
-                        <input type="text" id="phone_numner" name="phone_numner" class="form-control" placeholder="Enter phone number">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-2">
-                    <div class="form-group">
-                        <label for="dob">Date Of Birth <span class="text-small text-danger">*</span></label>
-                        <input type="date" name="dob" id="dob" class="form-control">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-2">
-                    <div class="form-group">
-                        <label for="religion">Religion <span class="text-small text-danger">*</span></label>
-                       <select name="religion" id="religion" class="form-control">
-                        <option value="Islam">Islam</option>
-                        <option value="Hinduism">Hinduism</option>
-                        <option value="Buddist">Buddist</option>
-                        <option value="Christian">Christian</option>
-                       </select>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-2">
-                    <div class="form-group">
-                        <label for="gender">Gender <span class="text-small text-danger">*</span></label>
-                        <select name="gender" id="gender" class="form-control">
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-2 mt-2">
-                    <div class="form-group">
-                        <label for="blood_group">Blood Group <span class="text-small text-danger">*</span></label>
-                        <select name="blood_group" id="blood_group" class="form-control">
-                            <option value="A+">A+ve</option>
-                            <option value="A-">A-ve</option>
-                            <option value="B+">B+ve</option>
-                            <option value="B-">B-ve</option>
-                            <option value="AB+">AB+ve</option>
-                            <option value="AB-">AB-ve</option>
-                            <option value="O+">O+ve</option>
-                            <option value="O-">O-ve</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-2 mt-2">
-                    <div class="form-group">
-                        <label for="father_name">Father's Name <span class="text-small text-danger">*</span></label>
-                        <input type="text" id="father_name" name="father_name" class="form-control" placeholder="Enter father's name">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-2 mt-2">
-                    <div class="form-group">
-                        <label for="mother_name">Mother's Name <span class="text-small text-danger">*</span></label>
-                        <input type="text" id="mother_name" name="mother_name" class="form-control" placeholder="Enter mother's name">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-2 mt-2">
-                    <div class="form-group">
-                        <label for="guardian_phone">Guardian Phone <span class="text-small text-danger">*</span></label>
-                        <input type="text" id="guardian_phone" name="guardian_phone" class="form-control" placeholder="Enter guardian number">
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-2 mt-2">
-                    <div class="form-group">
-                        <label for="file">Image</label>
-                        <div class="custom-file form-control" style="border: none">
-                            <input type="file" name="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                          </div>
-                    </div>
-                </div>
-
-                <div class="col-12 col-md-2 mt-2">
-                    <div class="d-flex ">
-                        <div class="no-preview text-center">
-                            <small>No Preview</small>
-                          </div>
-                    </div>
-                </div>
-
             </div>
-          </div>
-        </div>
+            </div>
 
-        <div class="x_panel">
+            <div class="x_panel">
             <div class="x_content">
               <h2 style="font-size: 22px;">Address :</h2>
 
@@ -250,7 +258,8 @@
                 </div>
             </div>
           </div>
-
+        </div>
+        </form>
       </div>
 </div>
 
@@ -333,7 +342,14 @@
             dataType : "JSON",
             data : formData,
             success : (data)=>{
-                console.log(data);
+                $("#studentInfo").append(`
+                    <input type='hidden' name='session_id' value='${data.session ? data.session : ''}' />
+                    <input type='hidden' name='class_id' value='${data.class ? data.class : ''}' />
+                    <input type='hidden' name='group_id' value='${data.group ? data.group : ''}' />
+                    <input type='hidden' name='section_id' value='${data.section ? data.section : ''}' />
+                `);
+
+                $("#form_wrapper").removeClass('d-none');
             },
 
             error : (error)=>{
@@ -342,6 +358,25 @@
         });
     });
 
+
+    $(document).ready(function() {
+        $('#imageInput').change(function() {
+            const file = this.files[0];
+            if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                $('#imagePreview').attr('src', event.target.result).removeClass('d-none');
+                $("#no-preview").addClass('d-none');
+            };
+
+            reader.readAsDataURL(file);
+            } else {
+            $('#imagePreview').attr('src', '#').addClass('d-none');
+            $("#no-preview").removeClass('d-none');
+            }
+        });
+    });
 </script>
 
 @endpush
