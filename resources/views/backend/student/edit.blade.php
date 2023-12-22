@@ -35,7 +35,7 @@
 
         <div class="x_panel">
             <div class="d-flex justify-content-between">
-                <h2 style="font-size: 26px;">Student Create</h2>
+                <h2 style="font-size: 26px;">Student Edit</h2>
                 <div class="text-right pt-2">
                     <a class="btn btn-secondary" href="{{route('student.index')}}"><i class="fa-solid fa-arrow-left mr-2" style="font-size: 18px"></i>Back</a>
                 </div>
@@ -56,10 +56,9 @@
                             <select name="session" id="session" class="form-control selectTwoSession">
                                 <option></option>
                                 @foreach ($sessions as $session)
-                                   <option {{$student->session_id === $session->id ? 'selected' : ''}} value="{{$session->id}}">{{$session->session_year}}</option> 
+                                   <option {{$student->session_id == $session->id ? 'selected' : ''}} value="{{$session->id}}">{{$session->session_year}}</option> 
                                 @endforeach
                             </select>
-                            {{-- <small id="errorMessage" class="text-danger"></small> --}}
                         </div>
                     </div>
                     <div class="col-12 col-md-2">
@@ -68,7 +67,7 @@
                             <select name="class" id="class" class="form-control selectTwoClass">
                                 <option></option>
                                 @foreach ($classes as $class)
-                                   <option {{$student->class_id === $class->id ? 'selected' : ''}} value="{{$class->id}}">{{$class->name}}</option> 
+                                   <option {{$student->class_id == $class->id ? 'selected' : ''}} value="{{$class->id}}">{{$class->name}}</option> 
                                 @endforeach
                             </select>
                             <small id="errorMessage" class="text-danger"></small>
@@ -80,7 +79,7 @@
                             <select name="section" id="section" class="form-control selectTwoSection">
                                 <option></option>
                                 @foreach (@$student->class->sections as $section)
-                                   <option {{$student->section_id === $section->id ? 'selected' : ''}} value="{{$section->id}}">{{$section->name}}</option> 
+                                   <option {{$student->section_id == $section->id ? 'selected' : ''}} value="{{$section->id}}">{{$section->name}}</option> 
                                 @endforeach
                             </select>
                         </div>
@@ -91,7 +90,7 @@
                             <select name="group" id="group" class="form-control selectTwoGroup">
                                 <option></option>
                                 @foreach (@$student->class->groups as $group)
-                                   <option {{$student->group_id === $group->id ? 'selected' : ''}} value="{{$group->id}}">{{$group->name}}</option> 
+                                   <option {{$student->group_id == $group->id ? 'selected' : ''}} value="{{$group->id}}">{{$group->name}}</option> 
                                 @endforeach
                             </select>
                         </div>
@@ -375,7 +374,6 @@
                     <input type='hidden' name='section_id' value='${data.section ? data.section : ''}' />
                 `);
 
-                // $("#form_wrapper").removeClass('d-none');
             },
 
             error : (error)=>{
