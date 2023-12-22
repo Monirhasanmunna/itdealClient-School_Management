@@ -168,6 +168,8 @@
         })
     });
 
+    
+    let storeFilter = '';
 
     $("#filter_form").submit(function(e){
         e.preventDefault();
@@ -177,7 +179,11 @@
         $("#modalSpinner").removeClass('d-none');
         
         const formData = $(this).serialize();
-       
+        storeFilter = formData;
+        studentFilter(formData);
+    });
+
+    function studentFilter(formData){
         $.ajax({
             url : `{{route('student.filter')}}`,
             type : "POST",
@@ -229,7 +235,7 @@
                 $("#errorMessage").html(error.responseJSON.message);
             }
         });
-    });
+    }
 
 
         function deleteItem(id){
@@ -249,12 +255,12 @@
                 icon: "success"
                 });
                     $.ajax({
-                        url : `/student/initial-setup/academic-year/delete/${id}`,
+                        url : `/student/delete/${id}`,
                         type : 'GET',
                         success : (response)=>{
                             if(response.status === 200){
                                 toastr.success(`${response.message}`);
-                                getSessions();
+                                studentFilter(storeFilter);
                             }
                         },
                     });

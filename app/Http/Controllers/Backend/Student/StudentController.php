@@ -223,9 +223,6 @@ class StudentController extends Controller
             $student->save();
         }
 
-        // toastr()->success('Student updated successfully');
-        // return to_route('student.index');
-
         return response()->json([
             'status' => 200,
             'message'=> 'Student updated successfully'
@@ -237,6 +234,18 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $student = Student::find($id);
+
+        $oldImage = $student->image;
+        if(file_exists($oldImage)){
+            unlink($oldImage);
+        }
+
+        $student->delete();
+
+        return response()->json([
+            'status' => 200,
+            'message'=> 'Student deleted successfully'
+        ]);
     }
 }
