@@ -145,10 +145,10 @@
                             <div class="form-group">
                                 <label for="religion">Religion <span class="text-small text-danger">*</span></label>
                             <select name="religion" id="religion" class="form-control">
-                                <option {{$student->gender === 'Islam' ? 'selected' : ''}} value="Islam">Islam</option>
-                                <option {{$student->gender === 'Hinduism' ? 'selected' : ''}} value="Hinduism">Hinduism</option>
-                                <option {{$student->gender === 'Buddist' ? 'selected' : ''}} value="Buddist">Buddist</option>
-                                <option {{$student->gender === 'Christian' ? 'selected' : ''}} value="Christian">Christian</option>
+                                <option {{$student->religion === 'Islam' ? 'selected' : ''}} value="Islam">Islam</option>
+                                <option {{$student->religion === 'Hinduism' ? 'selected' : ''}} value="Hinduism">Hinduism</option>
+                                <option {{$student->religion === 'Buddist' ? 'selected' : ''}} value="Buddist">Buddist</option>
+                                <option {{$student->religion === 'Christian' ? 'selected' : ''}} value="Christian">Christian</option>
                             </select>
                             </div>
                         </div>
@@ -157,8 +157,8 @@
                             <div class="form-group">
                                 <label for="gender">Gender <span class="text-small text-danger">*</span></label>
                                 <select name="gender" id="gender" class="form-control">
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
+                                    <option {{$student->gender === 'Male' ? 'selected' : ''}} value="Male">Male</option>
+                                    <option {{$student->gender === 'Female' ? 'selected' : ''}} value="Female">Female</option>
                                 </select>
                             </div>
                         </div>
@@ -167,14 +167,14 @@
                             <div class="form-group">
                                 <label for="blood_group">Blood Group <span class="text-small text-danger">*</span></label>
                                 <select name="blood_group" id="blood_group" class="form-control">
-                                    <option value="A+">A+ve</option>
-                                    <option value="A-">A-ve</option>
-                                    <option value="B+">B+ve</option>
-                                    <option value="B-">B-ve</option>
-                                    <option value="AB+">AB+ve</option>
-                                    <option value="AB-">AB-ve</option>
-                                    <option value="O+">O+ve</option>
-                                    <option value="O-">O-ve</option>
+                                    <option {{$student->blood_group === 'A+' ? 'selected' : ''}} value="A+">A+ve</option>
+                                    <option {{$student->blood_group === 'A-' ? 'selected' : ''}} value="A-">A-ve</option>
+                                    <option {{$student->blood_group === 'B+' ? 'selected' : ''}} value="B+">B+ve</option>
+                                    <option {{$student->blood_group === 'A-' ? 'selected' : ''}} value="B-">B-ve</option>
+                                    <option {{$student->blood_group === 'AB+' ? 'selected' : ''}} value="AB+">AB+ve</option>
+                                    <option {{$student->blood_group === 'AB-' ? 'selected' : ''}} value="AB-">AB-ve</option>
+                                    <option {{$student->blood_group === 'O+' ? 'selected' : ''}} value="O+">O+ve</option>
+                                    <option {{$student->blood_group === 'O-' ? 'selected' : ''}} value="O-">O-ve</option>
                                 </select>
                             </div>
                         </div>
