@@ -76,7 +76,7 @@
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="section">Section</label>
-                            <select name="section" id="section" class="form-control selectTwoSection">
+                            <select name="section" id="section" class="form-control selectTwoSection" {{$student->section_id ? '' : 'disabled'}}>
                                 <option></option>
                                 @foreach (@$student->class->sections as $section)
                                    <option {{$student->section_id == $section->id ? 'selected' : ''}} value="{{$section->id}}">{{$section->name}}</option> 
@@ -87,7 +87,7 @@
                     <div class="col-12 col-md-2">
                         <div class="form-group">
                             <label for="group">Group</label>
-                            <select name="group" id="group" class="form-control selectTwoGroup">
+                            <select name="group" id="group" class="form-control selectTwoGroup" {{$student->group_id ? '' : 'disabled'}}>
                                 <option></option>
                                 @foreach (@$student->class->groups as $group)
                                    <option {{$student->group_id == $group->id ? 'selected' : ''}} value="{{$group->id}}">{{$group->name}}</option> 
