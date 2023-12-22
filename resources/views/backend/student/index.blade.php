@@ -173,6 +173,7 @@
         e.preventDefault();
 
         $("#tBody").html('');
+        $("#tableCrad").removeClass('d-none');
         $("#modalSpinner").removeClass('d-none');
         
         const formData = $(this).serialize();
@@ -199,7 +200,7 @@
                             <td class="align-middle">${v.gender}</td>
                             <td class='align-middle text-center'>${viewImage(v.image, v.gender)}</td>
                             <td class="align-middle text-center">
-                                <a href="javascript:void(0)" onclick="editdata(${v.id})" class="btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="/student/edit/${v.id}" target="__blank" class="btn-sm btn-primary"><i class="fa-solid fa-pen-to-square"></i></a>
                                 <a href="javascript:void(0)" onclick="deleteItem(${v.id})" class="btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
                             </td>
                             
@@ -220,10 +221,8 @@
                     }
                 }
 
-
                 $("#modalSpinner").addClass('d-none');
                 $("#tBody").html(rows);
-                $("#tableCrad").removeClass('d-none');
             },
 
             error : (error)=>{

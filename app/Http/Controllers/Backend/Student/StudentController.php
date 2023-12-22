@@ -5,9 +5,13 @@ namespace App\Http\Controllers\Backend\Student;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\AcademicClass;
+use App\Models\Group;
+use App\Models\Section;
 use App\Models\Session;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use File;
+use Illuminate\Http\File as HttpFile;
 
 class StudentController extends Controller
 {
@@ -48,8 +52,7 @@ class StudentController extends Controller
 
         $students = $query->with(['class','section','group'])->orderBy('roll','ASC')->get();
 
-        return $students;
-        // return $request->all();
+        return response()->json($students);
     }
 
 
@@ -145,18 +148,88 @@ class StudentController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     */
+    */
+
     public function edit(string $id)
     {
-        //
+        $student    = Student::with(['class','section','group'])->find($id);
+        $sessions   = Session::all();
+        $classes    = AcademicClass::all();
+
+        return view('backend.student.edit',compact(['student', 'sessions', 'classes']));
     }
 
     /**
      * Update the specified resource in storage.
-     */
+    */
+    
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'roll'              => 'required',
+            'name'              => 'required',
+            'phone_number'      => 'required',
+            'dob'               => 'required',
+            'religion'          => 'required',
+            'gender'            => 'required',
+            'blood_group'       => 'required',
+            'father_name'       => 'required',
+            'mother_name'       => 'required',
+            'guardian_phone'    => 'required',
+            'district'          => 'required',
+            'upazila'           => 'required',
+            'post_office'       => 'required',
+            'village'           => 'required',
+            'session_id'        => 'required',
+            'class_id'          => 'required',
+            'image'             => 'mimes:jpeg,png,jpeg|max:5000'
+        ]);
+
+        // return $request->all();
+
+       $student = Student::find($id);
+
+       $student->update([
+            'roll'              => $request->roll,
+            'name'              => $request->name,
+            'phone_number'      => $request->phone_number,
+            'dob'               => $request->dob,
+            'religion'          => $request->religion,
+            'gender'            => $request->gender,
+            'blood_group'       => $request->blood_group,
+            'father_name'       => $request->father_name,
+            'mother_name'       => $request->mother_name,
+            'guardian_phone'    => $request->guardian_phone,
+            'district'          => $request->district,
+            'upazila'           => $request->upazila,
+            'post_office'       => $request->post_office,
+            'village'           => $request->village,
+            'session_id'        => $request->session_id,
+            'class_id'          => $request->class_id,
+            'group_id'          => $request->group_id,
+            'section_id'        => $request->section_id,
+        ]);
+
+        if($request->hasFile('image')){
+
+            $oldImage = $student->image;
+            if(file_exists($oldImage)){
+                unlink($oldImage);
+            }
+
+            $newFileName = time().'.'.$request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move('storage/uploads/student/', $newFileName);
+            $student->image = 'storage/uploads/student/'.$newFileName;
+            $student->save();
+        }
+
+        // toastr()->success('Student updated successfully');
+        // return to_route('student.index');
+
+        return response()->json([
+            'status' => 200,
+            'message'=> 'Student updated successfully'
+        ]);
     }
 
     /**

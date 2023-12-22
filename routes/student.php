@@ -13,10 +13,9 @@ Route::group(['as'=>'student.','prefix'=>'student'],function(){
 
     Route::get('/',[StudentController::class,'index'])->name('index');
     Route::get('/create',[StudentController::class,'create'])->name('create');
-
     Route::post('/store',[StudentController::class,'store'])->name('store');
-    Route::get('/edit/{id}',[StudentController::class,'edit']);
-    Route::post('/update',[StudentController::class,'update'])->name('update');
+    Route::get('/edit/{id}',[StudentController::class,'edit'])->name('edit');
+    Route::put('/update/{id}',[StudentController::class,'update'])->name('update');
     Route::any('/delete/{id}',[StudentController::class,'destroy']);
     
     Route::get('/get-section-group/{id}',[StudentController::class,'getSectionAndGroupByClass']);
