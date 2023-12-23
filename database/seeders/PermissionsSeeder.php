@@ -37,5 +37,25 @@ class PermissionsSeeder extends Seeder
             ]);
         }
 
+
+        $subjectPermission = ['subject','subject-create','assign-to-class','assign-to-teacher','optional-subject-assign'];
+
+        foreach ($subjectPermission as $key => $permission) {
+            Permission::updateOrCreate([
+                'name' => $permission,
+                'group_name' => 'Subject'
+            ]);
+        }
+
+
+        $lotteryPermission = ['lottery','lottery-student-entry','draw-lottery','lottery-result'];
+
+        foreach ($lotteryPermission as $key => $permission) {
+            Permission::updateOrCreate([
+                'name' => $permission,
+                'group_name' => 'Lottery'
+            ]);
+        }
+
     }
 }

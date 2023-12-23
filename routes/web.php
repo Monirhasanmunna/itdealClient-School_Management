@@ -28,8 +28,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     });
 
-require __DIR__.'/userManagement.php';
-require __DIR__.'/student.php';
+    require __DIR__.'/userManagement.php';
+    require __DIR__.'/student.php';
+    require __DIR__.'/subject.php';
 
 });
 
