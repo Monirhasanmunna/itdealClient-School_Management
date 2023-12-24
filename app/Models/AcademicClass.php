@@ -21,4 +21,10 @@ class AcademicClass extends Model
     {
         return $this->belongsToMany(Section::class,'class_section','academic_class_id','section_id');
     }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class, 'class_subjects', 'class_id', 'subject_id')
+                ->withPivot('group_id');
+    }
 }

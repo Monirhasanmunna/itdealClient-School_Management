@@ -11,15 +11,15 @@
 
 
         @can('subject')
-          <li class="mt-2"><a><i class="fa-solid fa-book"></i> Subject <span class="fa fa-chevron-down"></span></a>
-            <ul class="nav child_menu" style="display: none;">
+          <li class="{{Request::is('subject/*') ? 'active' : ''}} mt-2"><a><i class="fa-solid fa-book"></i> Subject <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu" style="{{Request::is('subject/*') ? 'display: block' : ''}}">
 
               @can('subject-create')
-              <li><a href="{{route('subject.index')}}">Create Subject</a></li>
+              <li><a href="{{route('subject.index')}}">Subject List</a></li>
               @endcan
 
               @can('assign-to-class')
-              <li><a href="{{route('student.index')}}">Assign to Class</a></li>
+              <li><a href="{{route('subject.assign-to-class.index')}}">Assign to Class</a></li>
               @endcan
 
               @can('assign-to-teacher')
