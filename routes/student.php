@@ -4,6 +4,7 @@ use App\Http\Controllers\Backend\Student\InitialSetup\ClassController;
 use App\Http\Controllers\Backend\Student\InitialSetup\GroupController;
 use App\Http\Controllers\Backend\Student\InitialSetup\SectionController;
 use App\Http\Controllers\Backend\Student\InitialSetup\SessionController;
+use App\Http\Controllers\Backend\Student\Report\ReportCardController;
 use App\Http\Controllers\Backend\Student\StudentController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,6 +22,16 @@ Route::group(['as'=>'student.','prefix'=>'student'],function(){
     Route::get('/get-section-group/{id}',[StudentController::class,'getSectionAndGroupByClass']);
     Route::post('filter-student',[StudentController::class,'studentFilter'])->name('filter');
     Route::post('filter-academic',[StudentController::class,'academicFilter'])->name('academic_filter');
+
+
+    Route::group(['as'=>'report.','prefix'=>'report'],function(){
+        Route::get('/',[ReportCardController::class,'index'])->name('index');
+        Route::get('/report-store/{id}',[ReportCardController::class,'store'])->name('store');
+        Route::get('/report-print/{id}',[ReportCardController::class,'print'])->name('print');
+        Route::get('/edit/{id}',[ReportCardController::class,'edit']);
+        Route::post('/update',[ReportCardController::class,'update'])->name('update');
+        Route::any('/delete/{id}',[ReportCardController::class,'destroy']);
+    });
 
     Route::group(['as'=>'setting.','prefix'=>'initial-setup'],function(){
 

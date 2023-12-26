@@ -50,7 +50,7 @@ class StudentController extends Controller
             $query->where('group_id',$request->group);
         }
 
-        $students = $query->with(['class','section','group'])->orderBy('roll','ASC')->get();
+        $students = $query->with(['class','section','group','reports'])->orderBy('roll','ASC')->get();
 
         return response()->json($students);
     }

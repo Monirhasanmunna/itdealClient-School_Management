@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             SessionSeeder::class,
             SectionSeeder::class,
             GroupSeeder::class,
+            FixedSubjectSeeder::class,
         ]);
         
     }
