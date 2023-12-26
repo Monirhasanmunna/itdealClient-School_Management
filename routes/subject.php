@@ -24,7 +24,9 @@ Route::group(['as'=>'subject.','prefix'=>'subject'],function(){
         Route::get('/',[AssignSubjectToClassController::class,'index'])->name('index');
         Route::get('/create',[AssignSubjectToClassController::class,'create'])->name('create');
         Route::post('/store',[AssignSubjectToClassController::class,'store'])->name('store');
-        Route::get('/edit/{id}',[AssignSubjectToClassController::class,'edit'])->name('edit');
+
+        Route::get('/edit/{class_id}/{group_id?}',[AssignSubjectToClassController::class,'edit'])->name('edit');
+
         Route::put('/update/{id}',[AssignSubjectToClassController::class,'update'])->name('update');
         Route::any('/delete/{id}',[AssignSubjectToClassController::class,'destroy'])->name('delete');
     

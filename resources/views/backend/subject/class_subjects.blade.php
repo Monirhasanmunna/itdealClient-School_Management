@@ -87,7 +87,7 @@
             type : "GET",
             dataType : "JSON",
             success : (response)=>{
-                // console.log(response);
+                console.log(response);
                 let rows = '';
                 $.each(response,function(i,v){
                     rows += `
@@ -98,12 +98,31 @@
                             <td class="align-middle">${getSubjectsByGroup(v)}</td>
 
                             <td class="text-center align-middle">
-                                <a href="/subject/assign-to-class/edit/${v.id}" class="btn-sm btn-primary"><i class="fa-solid fa-gears"></i></a>
+                                ${editByGroup(v)}
                             </td>
                         </tr>
                     `;
                 });
 
+                function editByGroup(cls){
+                    if(cls.groups.length > 0){
+                        let rows = '';
+
+                        $.each(cls.groups,function(i,group){
+                            rows += `
+                                <div class="row">
+                                    <div class="col mt-2" style="background-color: #dbdbdb;padding-top:10px;padding-bottom:10px;">
+                                        <a href="/subject/assign-to-class/edit/${cls.id}/${group.id}" class="btn-sm btn-primary"><i class="fa-solid fa-gears"></i></a>
+                                    </div>
+                                </div>
+                            `;
+                        });
+
+                        return rows;
+                    }else{
+                        return `<a href="/subject/assign-to-class/edit/${cls.id}" class="btn-sm btn-primary"><i class="fa-solid fa-gears"></i></a>`;
+                    }
+                }
 
                 function getGroups(classes){
                     let rows = '';
@@ -111,7 +130,7 @@
                         $.each(classes.groups,function(i,v){
                             rows += `
                                 <div class="row">
-                                    <div class="col py-2 mt-1" style="background-color: #d1d1d1">${v.name}</div>
+                                    <div class="col mt-2" style="background-color: #dbdbdb;padding-top:11px;padding-bottom:11px;">${v.name}</div>
                                 </div>
                             `;
                         });
@@ -129,14 +148,34 @@
                             let subjectsInGroup = cls.subjects.filter(subject => subject.pivot.group_id == group.id);
                             
                             rows += "<div class='row'>";
-                                rows += "<div class='col py-2 mt-1' style='background-color: #d1d1d1'>";
-                                $.each(subjectsInGroup,function(index,subject){
-                                   rows += "<span class='badge badge-primary mx-1'>" +subject.name+ "</span>" 
-                                });
-                                rows += "</div>"
+                                if(subjectsInGroup.length > 0){
+                                    rows += "<div class='col mt-2' style='background-color: #dbdbdb;padding-top:10px;padding-bottom:10px;'>";
+                                        $.each(subjectsInGroup,function(index,subject){
+                                        rows += "<span class='badge badge-info mx-1'>" +subject.name+ "</span>" 
+                                        });
+                                    rows += "</div>"
+                                }else{
+                                    rows += "<div class='col mt-2' style='background-color: #dbdbdb;padding-top:20px;padding-bottom:21px'>";
+
+                                    rows += "</div>";
+                                }
                             rows += "</div>";
 
                         });
+                    }else{
+                        rows += "<div class='row'>";
+                                if(cls.subjects.length > 0){
+                                    rows += "<div class='col mt-2' style='background-color: #dbdbdb;padding-top:10px;padding-bottom:10px;'>";
+                                        $.each(cls.subjects,function(index,subject){
+                                        rows += "<span class='badge badge-info mx-1'>" +subject.name+ "</span>" 
+                                        });
+                                    rows += "</div>"
+                                }else{
+                                    rows += "<div class='col ' style='background-color: #dbdbdb;padding-top:20px;padding-bottom:21px'>";
+
+                                    rows += "</div>";
+                                }
+                        rows += "</div>";
                     }
 
                     return rows;
@@ -153,36 +192,6 @@
         });
     }
 
-
-    function deleteItem(id){
-        Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-         }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-            title: "Deleted!",
-            text: "Subject has been deleted.",
-            icon: "success"
-            });
-                $.ajax({
-                     url : `/subject/delete/${id}`,
-                    type : 'GET',
-                    success : (response)=>{
-                        if(response.status === 200){
-                            toastr.success(`${response.message}`);
-                            getSubject();
-                        }
-                    },
-                });
-            }
-        });
-    }
 </script>
 
 @endpush

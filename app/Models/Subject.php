@@ -12,8 +12,9 @@ class Subject extends Model
     protected  $fillable = ['id','name','subject_code','subject_type','status','created_at','updated_at'];
 
 
-    public function class()
+    public function classes()
     {
-        return $this->belongsTo(AcademicClass::class, 'class_id');
+        return $this->belongsToMany(AcademicClass::class, 'class_subjects', 'subject_id', 'class_id');
     }
+
 }
