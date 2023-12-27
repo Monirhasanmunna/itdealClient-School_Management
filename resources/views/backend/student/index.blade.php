@@ -22,7 +22,9 @@
             <div class="mb-4 d-flex justify-content-between">
                 <h2 style="font-size: 20px;">Search Student</h2> 
 
+
                 <div class="text-right pt-2">
+                    <a class="btn btn-info" href="{{route('student.multiple-create')}}"><i class="fa-solid fa-square-plus mr-2" style="font-size: 18px"></i>Upload Student</a>
                     <a class="btn btn-success" href="{{route('student.create')}}"><i class="fa-solid fa-square-plus mr-2" style="font-size: 18px"></i>Add Student</a>
                 </div>
             </div>

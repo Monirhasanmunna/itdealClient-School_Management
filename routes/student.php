@@ -18,6 +18,9 @@ Route::group(['as'=>'student.','prefix'=>'student'],function(){
     Route::get('/edit/{id}',[StudentController::class,'edit'])->name('edit');
     Route::put('/update/{id}',[StudentController::class,'update'])->name('update');
     Route::any('/delete/{id}',[StudentController::class,'destroy'])->name('delete');
+
+    Route::get('/multiple/create',[StudentController::class,'multipleStudent'])->name('multiple-create');
+    Route::post('/multiple/upload',[StudentController::class,'multipleStudentStore'])->name('multiple-upload');
     
     Route::get('/get-section-group/{id}',[StudentController::class,'getSectionAndGroupByClass']);
     Route::post('filter-student',[StudentController::class,'studentFilter'])->name('filter');

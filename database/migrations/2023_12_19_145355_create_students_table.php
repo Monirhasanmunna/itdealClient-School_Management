@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('roll');
             $table->string('image')->nullable();
             $table->string('phone_number');
-            $table->string('dob');
+            $table->string('dob')->nullable();
             $table->enum('religion',['Islam','Hinduism','Buddist','Christian','Other']);
             $table->enum('gender',['Male','Female','Other']);
             $table->string('blood_group');

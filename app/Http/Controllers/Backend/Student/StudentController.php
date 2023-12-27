@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Backend\Student;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Imports\StudentAdmission2Import;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\StudentAdmissionImport;
 use App\Models\AcademicClass;
 use App\Models\Group;
 use App\Models\Section;
@@ -12,6 +15,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use File;
 use Illuminate\Http\File as HttpFile;
+use Illuminate\Support\Facades\Log;
 
 class StudentController extends Controller
 {
@@ -64,6 +68,36 @@ class StudentController extends Controller
         ]);
 
         return $request->all();
+    }
+
+
+    public function multipleStudent()
+    {
+        $sessions = Session::all();
+        $classes = AcademicClass::all();
+
+        return view('backend.student.bulk_upload',compact('sessions','classes'));
+    }
+
+    public function multipleStudentStore(Request $request)
+    {
+        $request->validate([
+            'session'        => 'required',
+            'class'          => 'required',
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+
+        try {
+            Excel::import(new StudentAdmission2Import($request->session, $request->class, $request->section, $request->group), $request->file('file'));
+
+            toastr()->success('Student Uploaded Successfully');
+            return redirect()->back();
+        } catch (\Exception $e) {
+            Log::error('Error importing students: ' . $e->getMessage());
+            toastr()->error('Error importing students. Please check the file and try again.');
+            return redirect()->back();
+        }
     }
 
     /**
