@@ -12,14 +12,65 @@
             margin: 20px;
         }
 
+        @media print {
+            .page-break1 {
+                page-break-after: always;
+            }
+
+            .page-break2 {
+                page-break-after: always;
+            }
+        }
+
     </style>
 </head>
 <body>
    <div class="main">
 
+    {{-- first page --}}
+
+        <div class="main_page mt-3 p-5" style="background-color:rgb(195, 218, 225);height:300px;border-radius:10px;">
+            <div class="d-flex">
+                <div><h6>প্রতিষ্ঠানের নামঃ</h6></div>
+                <div style="min-width: 500px;border-bottom:2px dotted black;margin-left:30px;"><h6>আফানউল্লাহ উচ্চ বিদ্যালয়</h6></div>
+            </div>
+
+            <div class="d-flex mt-5">
+                <div class="d-flex">
+                    <div><h6>শিক্ষার্থীর নামঃ</h6></div>
+                    <div style="min-width: 150px;border-bottom:2px dotted black;margin-left:30px;"><h6>{{$stdnt->name}}</h6></div>
+                </div>
+
+                <div class="d-flex" style="margin-left: 60px;">
+                    <div><h6>শিক্ষার্থীর আইডিঃ</h6></div>
+                    <div style="min-width: 150px;border-bottom:2px dotted black;margin-left:30px;"><h6>{{$stdnt->unique_id}}</h6></div>
+                </div>
+
+            </div>
+
+            <div class="d-flex mt-5">
+                <div class="d-flex">
+                    <div><h6>শ্রেণিঃ</h6></div>
+                    <div style="min-width: 200px;border-bottom:2px dotted black;margin-left:30px;"><h6>{{$stdnt->class->name}}</h6></div>
+                </div>
+
+                <div class="d-flex" style="margin-left: 80px;">
+                    <div><h6>শিক্ষাবর্ষঃ</h6></div>
+                    <div style="min-width: 200px;border-bottom:2px dotted black;margin-left:30px;"><h6>{{$stdnt->session->session_year}}</h6></div>
+                </div>
+
+            </div>
+        </div>
+
+    <div class="page-break1"></div>
+
+    {{-- first page --}}
+
+    @php $counter = 0; @endphp
     <div class="row pt-3">
         <div class="x_panel pt-3" style="background-color: #EBE9E9;" id="page_wrapper">
             @foreach ($reports as $key => $report)
+            @php $counter++; @endphp
             <div class="card mb-3" style="background-color: #FFFFFF !important;">
                 <div class="wrapper p-4">
                     {{-- subject title --}}
@@ -30,7 +81,6 @@
                     </div>
                     {{-- subject title --}}
 
-    
                     <div class="row">
                         @foreach ($report as $item)
                         <div class="col-4 px-2 mb-3 ">
@@ -61,6 +111,10 @@
                     </div>
                 </div>
             </div>
+
+            @if ($counter % 2 == 0)
+                <div class="page-break2"></div>
+            @endif
             @endforeach
         </div>
     </div>

@@ -61,11 +61,13 @@ class ReportCardController extends Controller
      */
     public function print(string $id)
     {
-        $student = Student::find($id)->load(['reports.subject','reports.chapter']);
+        $stdnt = Student::with(['class','section','group','session'])->find($id);
 
-        $reports = $student->reports->groupBy('subject.name');
-
-        return view('backend.student.report.reportCard',compact('reports'));
+        $student = Student::find($id);
+        
+        $reports = $student->load(['reports.subject','reports.chapter'])->reports->groupBy('subject.name');
+    
+        return view('backend.student.report.reportCard',compact('reports','stdnt'));
     }
 
     /**
