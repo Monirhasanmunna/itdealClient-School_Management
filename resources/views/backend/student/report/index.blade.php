@@ -76,8 +76,7 @@
                     <th class="column-title text-center" width='5%'>SL </th>
                     <th class="column-title">Name</th>
                     <th class="column-title">Roll</th>
-                    <th class="column-title">Input</th>
-                    <th class="column-title">Print</th>
+                    <th class="column-title">Report Print</th>
                   </tr>
                 </thead>
 
@@ -193,16 +192,17 @@
                             <td class="align-middle">${v.name}</td>
                             <td class="align-middle">${v.roll}</td>
                             <td class="align-middle">${reportCheck(v)}</td>
-                            <td class="align-middle"><a href="/student/report/report-print/${v.id}" target="__blank" class="btn btn-sm btn-success" >Print</a></td>
                         </tr>
                     `;
                 });
 
+                // href="/student/report/report-print/${v.id}"
+
                 function reportCheck(v){
                     if(v.reports.length > 0){
-                        return `<a href="javascript:void(0)" class="btn btn-sm btn-success">Report Created</a>`;
+                        return `<a href="/student/report/report-print/${v.id}" target="__blank" class="btn btn-sm btn-success">Print</a>`;
                     }else{
-                        return `<a href="/student/report/report-store/${v.id}" class="btn btn-sm btn-primary" >Create Report</a>`;
+                        return `<a href="javascript:void(0)" onclick="reportCreate(${v.id})" class="btn btn-sm btn-primary" >Create Report</a>`;
                     }
                 }
 
@@ -227,6 +227,21 @@
                 $("#errorMessage").html(error.responseJSON.message);
             }
         });
+    }
+
+
+    function reportCreate(id){
+        $.ajax({
+            url : `/student/report/report-store/${id}`,
+            type : "GET",
+            dataType : "JSON",
+            success : (response)=>{
+                if(response.status === 200){
+                    toastr.success(`${response.message}`);
+                    studentFilter(storeFilter);
+                }
+            }
+        })
     }
 
 </script>

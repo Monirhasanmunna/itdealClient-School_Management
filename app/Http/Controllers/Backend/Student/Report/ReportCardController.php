@@ -52,8 +52,10 @@ class ReportCardController extends Controller
             }
         }
 
-        toastr()->success('Report generate successfully');
-        return redirect()->back();
+        return response()->json([
+            'status' => 200,
+            'message'=> 'Report card created'
+        ]);
     }
 
     /**
