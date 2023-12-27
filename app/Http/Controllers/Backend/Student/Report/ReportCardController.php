@@ -40,14 +40,17 @@ class ReportCardController extends Controller
             $chapters = $subject->chapters;
 
             foreach ($chapters as $key => $chapter) {
+                $randomNumber = rand(4, 7);
                 $report = new Report();
                 $report->student_id = $student->id;
                 $report->subject_id = $subject->id;
                 $report->chapter_id = $chapter->id;
-                $report->option1 = true;
-                $report->option2 = true;
-                $report->option3 = true;
-                $report->option4 = true;
+
+                for ($i=1; $i <= $randomNumber; $i++) { 
+                    $propertyName = 'option' . $i;
+                    $report->$propertyName = true;
+                }
+               
                 $report->save();
             }
         }
