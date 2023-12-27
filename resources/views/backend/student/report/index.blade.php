@@ -193,7 +193,7 @@
                             <td class="align-middle">${v.name}</td>
                             <td class="align-middle">${v.roll}</td>
                             <td class="align-middle">${reportCheck(v)}</td>
-                            <td class="align-middle"><a href="/student/report/report-print/${v.id}" class="btn btn-sm btn-success" >Print</a></td>
+                            <td class="align-middle"><a href="/student/report/report-print/${v.id}" target="__blank" class="btn btn-sm btn-success" >Print</a></td>
                         </tr>
                     `;
                 });
