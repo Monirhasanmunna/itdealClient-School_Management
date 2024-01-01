@@ -42,10 +42,22 @@
             </div>
         </div>
 
+
+
         <div class="x_panel">
             <div class="mb-4 d-flex justify-content-between">
                 <h2 style="font-size: 20px;"></h2>
             </div>
+
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul class="mb-0 mb-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
             <form method="POST" id="filter_form">
                 @csrf
@@ -109,28 +121,28 @@
                         <div class="col-12 col-md-2">
                             <div class="form-group">
                                 <label for="roll">Roll <span class="text-small text-danger">*</span></label>
-                                <input type="number" id="roll" name="roll" class="form-control" placeholder="Enter roll number">
+                                <input type="number" id="roll" name="roll" value="{{old('roll')}}" class="form-control" placeholder="Enter roll number">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-2">
                             <div class="form-group">
                                 <label for="name">Name <span class="text-small text-danger">*</span></label>
-                                <input type="text" id="name" name="name" class="form-control" placeholder="Enter name">
+                                <input type="text" id="name" name="name" value="{{old('name')}}" class="form-control" placeholder="Enter name">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-2">
                             <div class="form-group">
                                 <label for="phone_number">Phone Number <span class="text-small text-danger">*</span></label>
-                                <input type="text" id="phone_number" name="phone_number" class="form-control" placeholder="Enter phone number">
+                                <input type="text" id="phone_number" name="phone_number" value="{{old('phone_number')}}" class="form-control" placeholder="Enter phone number">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-2">
                             <div class="form-group">
                                 <label for="dob">Date Of Birth <span class="text-small text-danger">*</span></label>
-                                <input type="date" name="dob" id="dob" class="form-control">
+                                <input type="date" name="dob" value="{{old('dob')}}" id="dob" class="form-control">
                             </div>
                         </div>
 
@@ -175,21 +187,21 @@
                         <div class="col-12 col-md-2 mt-2">
                             <div class="form-group">
                                 <label for="father_name">Father's Name <span class="text-small text-danger">*</span></label>
-                                <input type="text" id="father_name" name="father_name" class="form-control" placeholder="Enter father's name">
+                                <input type="text" id="father_name" name="father_name" value="{{old('father_name')}}" class="form-control" placeholder="Enter father's name">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-2 mt-2">
                             <div class="form-group">
                                 <label for="mother_name">Mother's Name <span class="text-small text-danger">*</span></label>
-                                <input type="text" id="mother_name" name="mother_name" class="form-control" placeholder="Enter mother's name">
+                                <input type="text" id="mother_name" name="mother_name" value="{{old('mother_name')}}" class="form-control" placeholder="Enter mother's name">
                             </div>
                         </div>
 
                         <div class="col-12 col-md-2 mt-2">
                             <div class="form-group">
                                 <label for="guardian_phone">Guardian Phone <span class="text-small text-danger">*</span></label>
-                                <input type="text" id="guardian_phone" name="guardian_phone" class="form-control" placeholder="Enter guardian number">
+                                <input type="text" id="guardian_phone" name="guardian_phone" value="{{old('guardian_phone')}}" class="form-control" placeholder="Enter guardian number">
                             </div>
                         </div>
 
@@ -224,28 +236,28 @@
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="district">District <span class="text-small text-danger">*</span></label>
-                            <input type="text" id="district" name="district" class="form-control" placeholder="Enter district name">
+                            <input type="text" id="district" name="district" value="{{old('district')}}" class="form-control" placeholder="Enter district name">
                         </div>
                     </div>
 
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="upazila">Upazila <span class="text-small text-danger">*</span></label>
-                            <input type="text" id="upazila" name="upazila" class="form-control" placeholder="Enter upazila name">
+                            <input type="text" id="upazila" name="upazila" value="{{old('upazila')}}" class="form-control" placeholder="Enter upazila name">
                         </div>
                     </div>
 
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="post_office">Post office <span class="text-small text-danger">*</span></label>
-                            <input type="text" id="post_office" name="post_office" class="form-control" placeholder="Enter post office name">
+                            <input type="text" id="post_office" name="post_office" value="{{old('post_office')}}" class="form-control" placeholder="Enter post office name">
                         </div>
                     </div>
 
                     <div class="col-12 col-md-3">
                         <div class="form-group">
                             <label for="village">Village <span class="text-small text-danger">*</span></label>
-                            <input type="text" id="village" name="village" class="form-control" placeholder="Enter village name">
+                            <input type="text" id="village" name="village" value="{{old('village')}}" class="form-control" placeholder="Enter village name">
                         </div>
                     </div>
 

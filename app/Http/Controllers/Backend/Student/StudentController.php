@@ -12,6 +12,7 @@ use App\Models\Group;
 use App\Models\Section;
 use App\Models\Session;
 use App\Models\Student;
+use App\Rules\Student\StudentAdmissionRule;
 use Illuminate\Http\Request;
 use File;
 use Illuminate\Http\File as HttpFile;
@@ -132,11 +133,10 @@ class StudentController extends Controller
             'post_office'       => 'required',
             'village'           => 'required',
             'session_id'        => 'required',
-            'class_id'          => 'required',
+            'class_id'          => ['required', new StudentAdmissionRule],
             'image'             => 'mimes:jpeg,png,jpeg|max:5000'
         ]);
 
-        // dd($request->all());
 
        $student = Student::create([
             'unique_id'         => Helper::studentUniqueId(),
