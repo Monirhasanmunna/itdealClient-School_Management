@@ -30,13 +30,17 @@ class StudentAdmission2Import implements ToCollection
             return empty(array_filter($row->toArray()));
         })->slice(1);
 
-        $existingAdmission = Student::pluck('roll')->toArray();
-
+        
         foreach ($rows as $key => $row) 
         {
-            $newAdmission = $row[0];
-
-            if(!in_array($newAdmission, $existingAdmission)){
+            $newAdmissionRoll = $row[0];
+            $existinRoll = Student::where('session_id', $this->session_id)
+                            ->where('class_id', $this->class_id)
+                            ->where('group_id', $this->group_id)
+                            ->where('section_id_id', $this->group_id)
+                            ->where('roll', $newAdmissionRoll)->count();
+            
+            if($existinRoll == 0){
                 Student::create([
                 'unique_id'         => Helper::studentUniqueId(),
                 'session_id'        => $this->session_id,
