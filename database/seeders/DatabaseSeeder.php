@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             SectionSeeder::class,
             GroupSeeder::class,
             FixedSubjectSeeder::class,
+            HrmDepartmentSeeder::class,
         ]);
         
     }

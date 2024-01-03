@@ -42,22 +42,25 @@
                 <li><a href="{{route('student.index')}}">Student List</a></li>
                 <li><a href="{{route('student.report.index')}}">Report Card</a></li>
                 
-                {{-- <li class=""><a>Report<span class="fa fa-chevron-down"></span></a>
-                  <ul class="nav child_menu" style="display: none;">
-
-                    <li class="sub_menu"><a href="level2.html">All Student</a></li>
-
-                    <li><a href="#level2_1">Section Wise Summary</a></li>
-
-                    <li><a href="#level2_2">Section Wise</a></li>
-
-                  </ul>
-                </li> --}}
-
                 @can('student.setting')
                 <li><a href="{{route('student.setting.session.index')}}">Setting</a>
                 @endcan
                 </li>
+            </ul>
+          </li>
+        @endcan
+
+
+        @can('HRM')
+          <li class="mt-2"><a><i class="fa-solid fa-user-group"></i> HRM <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu" style="display: none;">
+                @can('Teacher')
+                <li><a href="">Teacher List</a></li>
+                @endcan
+
+                @can('Department')
+                <li><a href="{{route('department.index')}}">Department List</a></li>
+                @endcan
             </ul>
           </li>
         @endcan

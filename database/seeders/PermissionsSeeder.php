@@ -57,5 +57,15 @@ class PermissionsSeeder extends Seeder
             ]);
         }
 
+
+        $HRMPermissions = ['HRM','Teacher','Department'];
+
+        foreach ($HRMPermissions as $key => $permission) {
+            Permission::updateOrCreate([
+                'name' => $permission,
+                'group_name' => 'HRM'
+            ]);
+        }
+
     }
 }
