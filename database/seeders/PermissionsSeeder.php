@@ -58,7 +58,7 @@ class PermissionsSeeder extends Seeder
         }
 
 
-        $HRMPermissions = ['HRM','Teacher','Department'];
+        $HRMPermissions = ['HRM','Teacher','Department','Designation'];
 
         foreach ($HRMPermissions as $key => $permission) {
             Permission::updateOrCreate([

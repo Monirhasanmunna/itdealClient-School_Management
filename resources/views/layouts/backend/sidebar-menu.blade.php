@@ -54,14 +54,17 @@
         @can('HRM')
           <li class="mt-2"><a><i class="fa-solid fa-user-group"></i> HRM <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu" style="display: none;">
-                @can('Teacher')
-                <li><a href="">Teacher List</a></li>
-                @endcan
 
                 @can('Department')
                 <li><a href="{{route('department.index')}}">Department List</a></li>
                 @endcan
+
+                @can('Designation')
+                <li><a href="{{route('designation.index')}}">Designation</a></li>
+                @endcan
+
             </ul>
+
           </li>
         @endcan
 
