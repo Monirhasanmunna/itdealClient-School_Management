@@ -14,6 +14,11 @@ class HrmDepartment extends Model
 
     public function designations()
     {
-        return $this->hasMany(Designation::class);
+        return $this->hasMany(Designation::class, 'department_id');
+    }
+
+    public function staffs()
+    {
+        return $this->hasMany(Staff::class);
     }
 }

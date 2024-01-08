@@ -63,6 +63,10 @@
                 <li><a href="{{route('designation.index')}}">Designation</a></li>
                 @endcan
 
+                @can('Designation')
+                <li><a href="{{route('staff.index')}}">Staff</a></li>
+                @endcan
+
             </ul>
 
           </li>

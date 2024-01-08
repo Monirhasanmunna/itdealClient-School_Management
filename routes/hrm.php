@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Backend\HRM\DepartmentController;
 use App\Http\Controllers\Backend\HRM\DesignationController;
+use App\Http\Controllers\Backend\HRM\StaffController;
+use App\Http\Controllers\Backend\HRM\TeacherController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -24,4 +26,18 @@ Route::group(['prefix'=>'hrm'],function(){
         Route::post('/update', [DesignationController::class, 'update'])->name('update');
         Route::any('/delete/{id}', [DesignationController::class, 'destroy'])->name('delete');
     });
-});
+
+
+    Route::group(['as'=>'staff.', 'prefix'=>'staff'],function(){
+        Route::get('/', [StaffController::class, 'index'])->name('index');
+        Route::get('/create', [StaffController::class, 'create'])->name('create');
+        Route::post('/get-staff', [StaffController::class, 'getStaff'])->name('get-staff');
+        Route::post('/store', [StaffController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [StaffController::class, 'edit'])->name('edit');
+        Route::put('/update/{id}', [StaffController::class, 'update'])->name('update');
+        Route::any('/delete/{id}', [StaffController::class, 'destroy'])->name('delete');
+
+        Route::get('/get-designations/{id}', [StaffController::class, 'getDesignation']);
+    });
+
+}); 

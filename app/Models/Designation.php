@@ -11,9 +11,14 @@ class Designation extends Model
 
     protected $fillable = ['id','name', 'department_id', 'status', 'description', 'created_at', 'updated_at'];
 
+    
     public function department()
     {
         return $this->belongsTo(HrmDepartment::class, 'department_id');
     }
 
+    public function staffs()
+    {
+        return $this->hasMany(Staff::class);
+    }
 }
