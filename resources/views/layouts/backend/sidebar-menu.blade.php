@@ -52,7 +52,7 @@
 
 
         @can('HRM')
-          <li class="mt-2"><a><i class="fa-solid fa-user-group"></i> HRM <span class="fa fa-chevron-down"></span></a>
+          <li class="mt-2"><a><i class="fa-solid fa-people-group"></i><span class="ml-1">HRM</span> <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu" style="display: none;">
 
                 @can('Department')
@@ -74,7 +74,7 @@
 
 
         @can('Expense')
-          <li class="mt-2"><a><i class="fa-solid fa-user-group"></i> Expense <span class="fa fa-chevron-down"></span></a>
+          <li class="mt-2"><a><i class="fa-solid fa-money-check-dollar"></i><span class="ml-1">Expense</span> <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu" style="display: none;">
 
               {{-- @can('Expense List')
