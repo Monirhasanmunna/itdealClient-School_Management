@@ -86,7 +86,7 @@
               @endcan
 
               @can('Expense Sub Category')
-                <li><a href="{{route('designation.index')}}">Sub Categories</a></li>
+                <li><a href="{{route('expense.sub-category.index')}}">Sub Categories</a></li>
               @endcan
 
             </ul>

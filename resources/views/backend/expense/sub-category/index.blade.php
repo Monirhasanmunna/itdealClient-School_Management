@@ -19,7 +19,7 @@
 @endpush
 
 @push('title')
-    Designation
+    Sub Category
 @endpush
 
 @section('content')
@@ -28,16 +28,16 @@
 
         <div class="x_panel">
             <div class="d-flex justify-content-between">
-                <h2 style="font-size: 26px;">Designation</h2>
+                <h2 style="font-size: 26px;">Expense Sub Category</h2>
             </div>
         </div>
 
         <div class="x_panel">
           <div class="x_title">
-            <h2>Designation List</h2>
+            <h2>Expense Sub Category List</h2>
 
             <div class="text-right">
-                <button class="btn btn-success " id="createModalBtn"><i class="fa-solid fa-square-plus mr-2" style="font-size: 18px"></i>New Create</button>
+                <button class="btn btn-success "  id="createModalBtn"><i class="fa-solid fa-square-plus mr-2" style="font-size: 18px"></i>New Create</button>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -48,8 +48,9 @@
                 <thead>
                   <tr class="headings">
                     <th class="column-title text-center" width='5%'>SL </th>
-                    <th class="column-title">Designation Name</th>
-                    <th class="column-title">Department</th>
+                    <th class="column-title">Name</th>
+                    <th class="column-title">Category Name</th>
+                    <th class="column-title">Note</th>
                     <th class="column-title">Status</th>
                     <th class="column-title no-link last text-center" width='10%'><span class="nobr">Action</span></th>
                   </tr>
@@ -80,7 +81,7 @@
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title">Designation Create</h5>
+              <h5 class="modal-title">Expense Sub Category Create</h5>
               <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
               </button>
           </div>
@@ -88,25 +89,26 @@
           <form id="form">
               @csrf
                   <div class="form-group">
-                      <label for="name">Designation Name <span class="text-danger">*</span></label>
-                      <input type="text" id="name" class="form-control input-default" name="name" placeholder="Enter Designation Name">
-                      <span id="errorMessage" class="d-none text-danger text-small"></span>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="department">department's<span class="text-danger">*</span></label>
-                    <select class="form-control selectTwo" name="department" style="width:100%">
+                    <label for="name">Categoy<span class="text-danger">*</span></label>
+                    <select class="form-control selectTwo" name="category" style="width:100%">
                         <option></option>
-                        @foreach ($departments as $department)
-                            <option value="{{$department->id}}">{{$department->name}}</option>
+                        @foreach ($categories as $category)
+                            <option value="{{$category->id}}">{{$category->name}}</option>
                         @endforeach
                     </select>
                   </div>
 
                   <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea id="description" rows="5" class="form-control input-default" name="description" placeholder="Enter Description Here..."></textarea>
+                      <label for="name">Category Name <span class="text-danger">*</span></label>
+                      <input type="text" id="name" class="form-control input-default" name="name" placeholder="Enter sub category name">
+                      <span id="errorMessage" class="d-none text-danger text-small"></span>
                   </div>
+
+                  <div class="form-group">
+                    <label for="note">Note</label>
+                    <textarea name="note" id="note" class="form-control" rows="5" placeholder="Enter Note Here"></textarea>
+                  </div>
+
               </div>
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -124,7 +126,7 @@
   <div class="modal-dialog" role="document">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title">Designation Edit</h5>
+              <h5 class="modal-title">Department Edit</h5>
               <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
               </button>
           </div>
@@ -151,7 +153,6 @@
 @push('js')
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
 <script>
     $(document).ready(function() {
         $("#createModalBtn").on('click',function(){
@@ -159,7 +160,7 @@
         })
 
         $('.selectTwo').select2({
-            placeholder: "Select Department",
+            placeholder: "Select category",
             allowClear: true,
             dropdownParent: $('#createModal')
         });
@@ -167,14 +168,14 @@
 </script>
 
 <script>
-
+    $("#sessionNav").addClass('activeNav');
     $(document).ready(function(){
         $("#form").submit(function(e){
             e.preventDefault();
             const formData = $(this).serialize();
 
             $.ajax({
-                url : `{{route('designation.store')}}`,
+                url : `{{route('expense.sub-category.store')}}`,
                 type : 'POST',
                 data : formData,
                 dataType : 'json',
@@ -182,7 +183,7 @@
                     console.log(response);
                     if(response.status === 200){
                         toastr.success(`${response.message}`);
-                        getDesignation();
+                        getSubCategoryList();
                         $("#createModal").modal('hide');
                         $("#createModal").find("#form")[0].reset();
                     }
@@ -199,20 +200,21 @@
     });
 
 
-    getDesignation();
-    async function getDesignation(){
+    getSubCategoryList();
+    async function getSubCategoryList(){
         await $.ajax({
-            url : `{{route('designation.get-designation')}}`,
+            url : `{{route('expense.sub-category.get-expenseSubCategory')}}`,
             type : "GET",
             dataType : "JSON",
             success : (response)=>{
                 let rows = '';
                 $.each(response,function(i,v){
                     rows += `
-                        <tr>
+                        <tr class='text-capitalize'>
                             <td class="text-center">${i+1}</td>
                             <td>${v.name}</td>
-                            <td>${v.department.name}</td>
+                            <td>${v.category.name}</td>
+                            <td>${v.note ? v.note : 'N/A'}</td>
                             <td>${status(v.status)}</td>
 
                             <td class="text-center">
@@ -239,32 +241,32 @@
     }
 
 
-
-     function editdata(id){
+    function editdata(id){
             $.ajax({
-                url : `/hrm/designation/edit/${id}`,
+                url : `/expense/sub-category/edit/${id}`,
                 type : 'GET',
                 success : (data)=>{
+                    console.log(data);
                     $("#modalBody").html(`
+
+                    <div class="form-group">
+                        <label for="name">Section's<span class="text-danger">*</span></label>
+                        <select class="form-control selectTwo2" name="category" style="width:100%">
+                            @foreach ($categories as $category)
+                                <option ${selectedCategory(data.category, {{$category['id']}})} value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="form-group" >
-                        <label for="name">Designation Name <span class="text-danger">*</span></label>
+                        <label for="name">Category Name <span class="text-danger">*</span></label>
                         <input type="text" class="form-control input-default" name="name" value='${data.name}'>
                         <span id="editErrorMessage" class=" text-danger text-small"></span>
                     </div>
 
                     <div class="form-group">
-                        <label for="department">Department<span class="text-danger">*</span></label>
-                        <select class="form-control selectTwo" name="department" style="width:100%">
-                            <option></option>
-                            @foreach ($departments as $department)
-                                <option ${selectedDepartment(data.department, {{$department['id']}})} value="{{$department->id}}">{{$department->name}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description">Description</label>
-                        <textarea id="description" rows="5" class="form-control input-default" name="description" placeholder="Enter Description Here...">${data.description == null ? '' : data.description}</textarea>
+                        <label for="note">Note</label>
+                        <textarea name="note" id="note" class="form-control" rows="5" placeholder="Enter Note Here">${data.note ? data.note : ''}</textarea>
                     </div>
 
                     <div class="form-group" >
@@ -280,9 +282,17 @@
 
                     $("#editModal").modal('show');
 
+                    // selected sections function
+                    function selectedCategory(category , id){
+                       if(category.id == id){
+                            return 'selected';
+                       }else{
+                            return '';
+                       }
+                    }
+
                     //  select 2 initial in modal
-                    $('.selectTwo').select2({
-                        placeholder: "Select Department",
+                    $('.selectTwo2').select2({
                         allowClear: true,
                         dropdownParent: $('#editModal')
                     });
@@ -293,15 +303,6 @@
                         }else{
                             return `false`;
                         }
-                    }
-
-                    // selected sections function
-                    function selectedDepartment(department , id){
-                       if(department.id == id){
-                            return 'selected';
-                       }else{
-                            return '';
-                       }
                     }
                 }
 
@@ -315,13 +316,13 @@
             const updateData = $(this).serialize();
 
             $.ajax({
-                url : `{{route('designation.update')}}`,
+                url : `{{route('expense.sub-category.update')}}`,
                 type : 'POST',
                 data : updateData,
                 success : (response)=>{
                     if(response.status === 200){
                         toastr.success(`${response.message}`);
-                        getDesignation();
+                        getSubCategoryList();
                         $("#editModal").modal('hide');
                     }
                 },
@@ -349,16 +350,16 @@
             if (result.isConfirmed) {
                 Swal.fire({
                 title: "Deleted!",
-                text: "Designation has been deleted.",
+                text: "Department has been deleted.",
                 icon: "success"
                 });
                     $.ajax({
-                        url : `/hrm/designation/delete/${id}`,
+                        url : `/expense/sub-category/delete/${id}`,
                         type : 'GET',
                         success : (response)=>{
                             if(response.status === 200){
                                 toastr.success(`${response.message}`);
-                                getDesignation();
+                                getSubCategoryList();
                             }
                         },
                     });
