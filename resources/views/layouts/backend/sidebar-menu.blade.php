@@ -63,9 +63,31 @@
                 <li><a href="{{route('designation.index')}}">Designation</a></li>
                 @endcan
 
-                @can('Designation')
+                @can('Staff')
                 <li><a href="{{route('staff.index')}}">Staff</a></li>
                 @endcan
+
+            </ul>
+
+          </li>
+        @endcan
+
+
+        @can('Expense')
+          <li class="mt-2"><a><i class="fa-solid fa-user-group"></i> Expense <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu" style="display: none;">
+
+              {{-- @can('Expense List')
+                <li><a href="{{route('department.index')}}">Expense List</a></li>
+              @endcan --}}
+
+              @can('Expense Category')
+                <li><a href="{{route('expense.category.index')}}">Categories</a></li>
+              @endcan
+
+              @can('Expense Sub Category')
+                <li><a href="{{route('designation.index')}}">Sub Categories</a></li>
+              @endcan
 
             </ul>
 

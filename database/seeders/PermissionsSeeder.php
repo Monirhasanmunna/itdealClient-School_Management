@@ -18,16 +18,7 @@ class PermissionsSeeder extends Seeder
             'group_name' => 'dashboard'
         ]);
 
-        $userManagementPermissions = ['user_management','user_management.permissions','user_management.roles','user_management.users'];
-
-        foreach ($userManagementPermissions as $key => $permission) {
-            Permission::updateOrCreate([
-                'name' => $permission,
-                'group_name' => 'user_management'
-            ]);
-        }
-
-
+        
         $studentPermission = ['student','student.setting','student.setting.academic year','student.setting.class','student.setting.shift','student.setting.section','student.setting.group','student.setting.student category',];
 
         foreach ($studentPermission as $key => $permission) {
@@ -48,6 +39,26 @@ class PermissionsSeeder extends Seeder
         }
 
 
+        $HRMPermissions = ['HRM','Staff','Department','Designation'];
+
+        foreach ($HRMPermissions as $key => $permission) {
+            Permission::updateOrCreate([
+                'name' => $permission,
+                'group_name' => 'HRM'
+            ]);
+        }
+
+
+        $ExpensePermissions = ['Expense','Expense Category','Expense Sub Category', 'Expense List'];
+
+        foreach ($ExpensePermissions as $key => $permission) {
+            Permission::updateOrCreate([
+                'name' => $permission,
+                'group_name' => 'Expense'
+            ]);
+        }
+
+
         $lotteryPermission = ['lottery','lottery-student-entry','draw-lottery','lottery-result'];
 
         foreach ($lotteryPermission as $key => $permission) {
@@ -58,12 +69,12 @@ class PermissionsSeeder extends Seeder
         }
 
 
-        $HRMPermissions = ['HRM','Teacher','Department','Designation'];
+        $userManagementPermissions = ['user_management','user_management.permissions','user_management.roles','user_management.users'];
 
-        foreach ($HRMPermissions as $key => $permission) {
+        foreach ($userManagementPermissions as $key => $permission) {
             Permission::updateOrCreate([
                 'name' => $permission,
-                'group_name' => 'HRM'
+                'group_name' => 'user_management'
             ]);
         }
 

@@ -32,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     require __DIR__.'/student.php';
     require __DIR__.'/subject.php';
     require __DIR__.'/hrm.php';
+    require __DIR__.'/expense.php';
 
 });
 
